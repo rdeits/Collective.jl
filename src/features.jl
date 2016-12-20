@@ -35,8 +35,10 @@ end
 @addfeatures LetterAtIndexFromEnd [LetterAtIndexFromEnd(l, j) for l in 'a':'z' for j in 1:26]
 satisfies(f::LetterAtIndexFromEnd, stat) = length(stat.word) >= f.index && stat.word[end - f.index + 1] == f.letter
 
-isconsonant(char) = match(r"[bcdfghjklmnpqrstvwxyz]", char)
-isvowel(char) = match(r"[aeiouy]", char)
+VOWELS = Set(collect("aeiouy"))
+CONSONANTS = Set(collect("bcdfghjklmnpqrstvwxyz"))
+isconsonant(char) = char in CONSONANTS
+isvowel(char) = char in VOWELS
 
 immutable AlternatesConsonantVowel <: Feature
 end
@@ -56,3 +58,21 @@ immutable ScrabbleScore <: Feature
 end
 @addfeatures ScrabbleScore [ScrabbleScore(i) for i in 1:30]
 satisfies(f::ScrabbleScore, stat) = stat.scrabble_score == f.score
+
+immutable NumUniqueVowels <: Feature
+    n::Int
+end
+@addfeatures NumUniqueVowels [NumUniqueVowels(i) for i in 1:6]
+satisfies(f::NumUniqueVowels, stat) = stat.num_unique_vowels == f.n
+
+immutable NumUniqueConsonants <: Feature
+    n::Int
+end
+@addfeatures NumUniqueConsonants [NumUniqueConsonants(i) for i in 1:6]
+satisfies(f::NumUniqueConsonants, stat) = stat.num_unique_consonants == f.n
+
+immutable NumUniqueLetters <: Feature
+    n::Int
+end
+@addfeatures NumUniqueLetters [NumUniqueLetters(i) for i in 1:10]
+satisfies(f::NumUniqueLetters, stat) = stat.num_unique_letters == f.n

@@ -1,31 +1,33 @@
 @testset "ventersections" begin
     words = PuzzleTools.Wordsets.unixwords()[1:100:end];
     c = Collective.Corpus(words)
+
+    function best_feature(list)
+        r, _ = findmin(Collective.analyze(c, list))
+        r.feature
+    end
+
     @testset "diagram 1" begin
-        @testset "set 1" begin
-            list = ["lowered", "levitate", "inanimate", "paradise", "leveraged", "sizes", "tuxedo"]
-            r, _ = findmin(Collective.analyze(c, list))
-            @test r.feature == Collective.AlternatesConsonantVowel()
-        end
+        # Set 1
+        @test best_feature(["lowered", "levitate", "inanimate", "paradise", "leveraged", "sizes", "tuxedo"]) == Collective.AlternatesConsonantVowel()
 
-        @testset "set 2" begin
-            list = ["leveraged", "sizes", "tuxedo", "lynx", "lightly", "crocodile", "triumph"]
-            r, _ = findmin(Collective.analyze(c, list))
-            @test r.feature == Collective.ScrabbleScore(14)
-        end
+        # Set 2
+        @test best_feature(["leveraged", "sizes", "tuxedo", "lynx", "lightly", "crocodile", "triumph"]) == Collective.ScrabbleScore(14)
 
-        @testset "set 3" begin
-            list = ["lowered", "levitate", "leveraged", "lynx", "lightly", "lengths", "legislator"]
-            r, _ = findmin(Collective.analyze(c, list))
-            @test r.feature == Collective.LetterAtIndex('l', 1)
-        end
+        # Set 3
+        @test best_feature(["lowered", "levitate", "leveraged", "lynx", "lightly", "lengths", "legislator"]) == Collective.LetterAtIndex('l', 1)
     end
 
     @testset "diagram 2" begin
-        @testset "set 2" begin
-            list = ["grimaced", "formally", "questionable", "discouraged", "communicated", "chrysalis", "saccharin"]
-            r, _ = findmin(Collective.analyze(c, list))
-            @test r.feature == Collective.LetterAtIndexFromEnd('a', 4)
-        end
+        # Set 2
+        @test best_feature(["questionable", "businesswoman", "exhaustion", "discouraged", "communicated", "hallucinogen", "sequoia"]) == Collective.NumUniqueVowels(5)
+
+        # Set 3
+        @test best_feature(["grimaced", "formally", "questionable", "discouraged", "communicated", "chrysalis", "saccharin"]) == Collective.LetterAtIndexFromEnd('a', 4)
+    end
+
+    @testset "diagram 3" begin
+        # Set 3
+        @test best_feature(["thumbtacks", "monologue", "testimony", "camel", "meteorology", "trampoline", "achievement"]) == Collective.ContainsLetter('m')
     end
 end
