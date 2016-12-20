@@ -1,5 +1,5 @@
 using Collective
 using Base.Test
+import PuzzleTools
 
-# write your own tests here
-@test 1 == 2
+include("venntersections.jl")
