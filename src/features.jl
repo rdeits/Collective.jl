@@ -2,7 +2,7 @@ abstract Feature
 size(::Feature) = ()
 getindex(f::Feature, ::CartesianIndex{0}) = f
 
-const FEATURES = []
+const FEATURES = Feature[]
 
 function allfeatures()
     return FEATURES
@@ -10,8 +10,8 @@ end
 
 macro addfeatures(T, expr)
     quote
-        addfeatures(::Type{$T}) = $(esc(expr))
-        append!(FEATURES, addfeatures($T))
+        allfeatures(::Type{$T}) = $(esc(expr))
+        append!(FEATURES, allfeatures($T))
     end
 end
 

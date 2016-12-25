@@ -30,4 +30,9 @@
         # Set 3
         @test best_feature(["thumbtacks", "monologue", "testimony", "camel", "meteorology", "trampoline", "achievement"]) == Collective.ContainsLetter('m')
     end
+
+    @testset "diagram 4" begin
+        # Set 3
+        @test best_feature(["philharmonic", "mischievous", "leeching", "loophole", "toothpaste", "alcoholic", "narwhal"]) == Collective.LetterAtIndex('h', 5)
+    end
 end
