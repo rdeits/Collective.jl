@@ -3,51 +3,35 @@ __precompile__()
 module Collective
 
 import Base: size, getindex, isless
+using HypothesisTests: BinomialTest, pvalue
 
-include("statistics.jl")
 include("features.jl")
 
-function frequency(feature::Feature, stats::AbstractArray{Statistics})
-    sum(satisfies.(feature, stats)) / length(stats)
-end
-
 type Corpus
-    features::Vector{Feature}
+    features::FeatureSet
     frequencies::Vector{Float64}
 end
 function Corpus(words::AbstractArray{String})
-    features = allfeatures()
-    stats = Statistics.(lowercase.(words))
-    frequencies = Float64[frequency(f, stats) for f in features]
+    features = FeatureSet(allfeatures())
+    frequencies = sum(features.evaluate(lowercase(word)) for word in words) / length(words)
     Corpus(features, frequencies)
 end
 
 immutable FeatureResult
-    feature::Feature
-    satisfied::Vector{Bool}
-    frequency::Float64
+    description::String
+    satisfied::BitArray{1}
+    probability::Float64
 end
 
-isless(f1::FeatureResult, f2::FeatureResult) = f1.frequency < f2.frequency
+isless(f1::FeatureResult, f2::FeatureResult) = f1.probability < f2.probability
 
-function summarize(feature::Feature, frequency::Float64, words::AbstractArray{String})
-    stats = Statistics.(lowercase.(words))
-    sat = Vector{Bool}(length(stats))
-    total_freq = 1.0
-    for i in 1:length(stats)
-        if satisfies(feature, stats[i])
-            sat[i] = true
-            total_freq *= frequency
-        else
-            sat[i] = false
-            total_freq *= (1 - frequency)
-        end
-    end
-    FeatureResult(feature, sat, binomial(length(sat), sum(sat)) * total_freq)
-end
+binomial_probability(successes, trials, frequency) = pvalue(BinomialTest(successes, trials, frequency))
 
 function analyze(corpus::Corpus, words::AbstractArray{String})
-    results = FeatureResult[summarize(corpus.features[i], corpus.frequencies[i], words) for i in 1:length(corpus.features)]
+    match = corpus.features.evaluate.(lowercase.(words))
+    num_matches = sum(match)
+    probabilities = binomial_probability.(num_matches, length(words), corpus.frequencies)
+    FeatureResult.(corpus.features.descriptions, [[m[i] for m in match] for i in 1:length(corpus.features.descriptions)], probabilities)
 end
 
 
