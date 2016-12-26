@@ -1,5 +1,6 @@
 @testset "ventersections" begin
     words = lowercase.(strip.(split(readstring("/usr/share/dict/words"))))[1:100:end]
+    words = [replace(word, r"[^a-z]", "") for word in words]
     c = Collective.Corpus(words)
 
     function best_feature(list)
