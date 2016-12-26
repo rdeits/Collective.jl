@@ -1,5 +1,7 @@
 @testset "ventersections" begin
-    words = lowercase.(strip.(split(readstring("/usr/share/dict/words"))))[1:100:end]
+    words = lowercase.(strip.(split(readstring("/usr/share/dict/words"))))[1:10:end]
+    @show length(words)
+    @show words[1:10]
     words = [replace(word, r"[^a-z]", "") for word in words]
     c = Collective.Corpus(words)
 
