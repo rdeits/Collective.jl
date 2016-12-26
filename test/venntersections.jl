@@ -1,12 +1,17 @@
 @testset "ventersections" begin
-    words = lowercase.(strip.(split(readstring("/usr/share/dict/words"))))[1:10:end]
+    words = lowercase.(strip.(split(readstring("/usr/share/dict/words"))))
+    words = words[1:Int(round(length(words) / 10000)):end]
     @show length(words)
     @show words[1:10]
     words = [replace(word, r"[^a-z]", "") for word in words]
     c = Collective.Corpus(words)
 
-    function best_feature(list)
-        r, _ = findmin(Collective.analyze(c, list))
+    function best_feature(wordlist)
+        results = Collective.analyze(c, wordlist)
+        for result in results[1:100:end]
+            @test result.evaluator.(wordlist) == result.satisfied
+        end
+        r, _ = findmin(r for r in results if all(r.satisfied))
         r.description
     end
 
@@ -19,6 +24,9 @@
 
         # Set 3
         @test best_feature(["lowered", "levitate", "leveraged", "lynx", "lightly", "lengths", "legislator"]) == "contains l at index 1"
+
+        # Set 4
+        @test best_feature(["levitate", "inanimate", "sizes", "lightly", "crocodile", "legislator", "carousels"]) == "contains repeated letter"
     end
 
     @testset "diagram 2" begin
