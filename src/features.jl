@@ -86,17 +86,87 @@ function contains_repeated_letter(word)
     return false
 end
 
+contains_day_of_week(word) = ismatch(r"(sat)|(sun)|(mon)|(tue)|(wed)|(thu)|(fri)", word)
+
+"""
+Letters are alpha, then reverse alpha
+"""
+function is_hill(word)
+    diffs = diff(collect(word))
+    has_rise = false
+    has_fall = false
+    rising = true
+    for d in diffs
+        if d > 0
+            if !rising
+                return false
+            end
+            has_rise = true
+        elseif d < 0
+            rising = false
+            has_fall = true
+        end
+    end
+    has_rise && has_fall
+end
+
+"""
+Letters are reverse alpha, then alpha
+"""
+function is_valley(word)
+    diffs = diff(collect(word))
+    has_rise = false
+    has_fall = false
+    rising = false
+    for d in diffs
+        if d < 0
+            if rising
+                return false
+            end
+            has_fall = true
+        elseif d > 0
+            rising = true
+            has_rise = true
+        end
+    end
+    has_rise && has_fall
+end
+
+function is_sequential(a::AbstractArray)
+    for i in 1:(length(a) - 1)
+        a[i+1] == a[i] + 1 || return false
+    end
+    true
+end
+
+"""
+Letter tally is 1, 2, 3, etc.
+"""
+function is_pyramid(word)
+    letter_tallies = zeros(Int, 26)
+    for c in word
+        letter_tallies[c - 'a' + 1] += 1
+    end
+    nonzero_tallies = Int[t for t in letter_tallies if t > 0]
+    is_sequential(sort!(nonzero_tallies))
+end
+
 function allfeatures()
     Feature[
-        @feature((scrabble_score(word) == j for j in 1:26), "scrabble score $j")
-        @feature((c in word for c in 'a':'z'), "contains $c")
-        @feature((length(word) >= j && word[j] == c for c in 'a':'z', j in 1:26), "contains $c at index $j")
-        @feature((length(word) >= j && word[end - j + 1] == c for c in 'a':'z', j in 1:26), "contains $c at index $j from end")
-        @feature((num_unique_vowels(word) == j for j in 1:5), "$j unique vowels")
-        @feature((num_unique_consonants(word) == j for j in 1:21), "$j unique consonants")
-        @feature((num_unique_letters(word) == j for j in 1:26), "$j unique letters")
+        @feature((scrabble_score(word) == j for j in 1:26), "has scrabble score $j")
+        @feature((c in word for c in 'a':'z'), "contains '$c'")
+        @feature((length(word) >= j && word[j] == c for c in 'a':'z', j in 1:26), "contains '$c' at index $j")
+        @feature((length(word) >= j && word[end - j + 1] == c for c in 'a':'z', j in 1:26), "contains '$c' at index $j from end")
+        @feature((num_unique_vowels(word) == j for j in 1:5), "has $j unique vowels")
+        @feature((num_unique_consonants(word) == j for j in 1:21), "has $j unique consonants")
+        @feature((num_unique_letters(word) == j for j in 1:26), "has $j unique letters")
         @feature((alternates_consonant_vowel(word)), "alternates consonant vowel")
-        @feature((contains_double_letter(word)), "contains double letter")
-        @feature((contains_repeated_letter(word)), "contains repeated letter")
+        @feature((contains_double_letter(word)), "contains a double letter")
+        @feature(contains_repeated_letter(word), "contains a repeated letter")
+        @feature(contains_day_of_week(word), "contains a day of the week abbreviation")
+        @feature(is_hill(word), "is a hill word")
+        @feature(is_valley(word), "is a valley word")
+        @feature(word == reverse(word), "is a palindrome")
+        @feature(is_pyramid(word), "is a pyramid word")
         ]
 end
