@@ -17,6 +17,9 @@
     # Set 1
     @test best_feature(["ample", "adenoid", "music", "fifa"]).description == "is a hill word"
 
+    # Set 2
+    @test best_feature(["peeped", "isseis", "fee", "acacia", "salsas", "arrear"]).description == "is a pyramid word"
+
     # Set 3
     @test best_feature(["skort", "sporty", "yolks", "peccadillo", "unknot", "rosy"]).description == "is a valley word"
 
