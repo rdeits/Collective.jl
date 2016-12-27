@@ -21,10 +21,12 @@ end
 
 immutable FeatureResult
     description::String
-    evaluator::Function
+    evaluate::Function
     satisfied::BitArray{1}
     probability::Float64
 end
+
+(r::FeatureResult)(word::String) = r.evaluate(word)
 
 isless(f1::FeatureResult, f2::FeatureResult) = f1.probability < f2.probability
 

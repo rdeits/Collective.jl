@@ -86,6 +86,9 @@ function contains_repeated_letter(word)
     return false
 end
 
+contains_day_of_week(word) = ismatch(r"(sat)|(sun)|(mon)|(tue)|(wed)|(thu)|(fri)", word)
+
+
 function allfeatures()
     Feature[
         @feature((scrabble_score(word) == j for j in 1:26), "scrabble score $j")
@@ -98,5 +101,6 @@ function allfeatures()
         @feature((alternates_consonant_vowel(word)), "alternates consonant vowel")
         @feature((contains_double_letter(word)), "contains double letter")
         @feature((contains_repeated_letter(word)), "contains repeated letter")
+        @feature((contains_day_of_week(word)), "contains day of the week abbreviation")
         ]
 end
