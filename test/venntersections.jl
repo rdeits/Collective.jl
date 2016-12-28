@@ -3,20 +3,6 @@
 
 @testset "ventersections" begin
 
-    words = lowercase.(strip.(split(readstring("../data/113809of.fic"))))
-    @show length(words)
-    @show words[1:10]
-    corpus = Collective.Corpus(words[1:Int(round(length(words) / 10000)):end])
-
-    function best_feature(wordlist)
-        results = Collective.analyze(corpus, wordlist)
-        for result in results[1:100:end]
-            @test result.evaluate.(wordlist) == result.satisfied
-        end
-        r, _ = findmin(r for r in results if all(r.satisfied))
-        r
-    end
-
     @testset "diagram 1" begin
         # Set 1
         f1 = best_feature(["lowered", "levitate", "inanimate", "paradise", "leveraged", "sizes", "tuxedo"])
