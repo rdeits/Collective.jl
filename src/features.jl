@@ -151,6 +151,26 @@ function is_pyramid(word)
     is_sequential(sort!(nonzero_tallies))
 end
 
+function num_alpha_bigrams(word)
+    count = 0
+    for i in 1:(length(word) - 1)
+        if word[i] < word[i + 1]
+            count += 1
+        end
+    end
+    count
+end
+
+function num_reverse_alpha_bigrams(word)
+    count = 0
+    for i in 1:(length(word) - 1)
+        if word[i] > word[i + 1]
+            count += 1
+        end
+    end
+    count
+end
+
 function allfeatures()
     Feature[
         @feature((scrabble_score(word) == j for j in 1:26), "has scrabble score $j")
@@ -168,5 +188,7 @@ function allfeatures()
         @feature(is_valley(word), "is a valley word")
         @feature(word == reverse(word), "is a palindrome")
         @feature(is_pyramid(word), "is a pyramid word")
+        @feature((num_alpha_bigrams(word) == j for j in 0:10), "has $j alphabetical bigrams")
+        @feature((num_reverse_alpha_bigrams(word) == j for j in 0:10), "has $j reverse alphabetical bigrams")
         ]
 end
