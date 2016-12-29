@@ -90,6 +90,19 @@ function best_cluster(corpus::Corpus, words::AbstractArray{String}, n::Integer)
     words[best_subset], best_feature(corpus, words[best_subset])
 end
 
+function common_features(featureset::FeatureSet, words::AbstractArray{String})
+    vals = featureset.evaluate.(lowercase.(words))
+    common_indices = [i for i in 1:length(vals[1]) if all(v[i] for v in vals)]
+    FeatureResult[
+        FeatureResult(featureset.descriptions[i],
+                      featureset.evaluators[i],
+                      [m[i] for m in vals],
+                      NaN) for i in common_indices]
+end
+
+common_features(corpus::Corpus, words::AbstractArray{String}) = 
+    common_features(corpus.features, words)
+
 
 
 end
