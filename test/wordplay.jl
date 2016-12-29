@@ -16,7 +16,7 @@
     @test best_feature(["testset", "lol", "tenet", "malayalam"]).description == "is a palindrome"
 
     # Set 5
-    @test best_feature(["hitchhiker", "kaashoek", "jellystone", "kierkegaard", "metallica", "maastrict", "menschheit"]).description == "contains a double letter"
+    @test best_feature(["hitchhiker", "kaashoek", "jellystone", "kierkegaard", "metallica", "maastrict", "menschheit"]).description == "contains 1 double letters"
 
     # Set 6
     @test best_feature(["aime", "eye", "eerie", "riaa", "oahu", "oeis"]).description == "has 1 unique consonants"

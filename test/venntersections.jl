@@ -17,7 +17,7 @@
         @test f3.description == "contains 'l' at index 1"
 
         # Set 4
-        f4 = best_feature(["levitate", "inanimate", "sizes", "lightly", "crocodile", "legislator", "carousels"])
+        f4 = best_feature(["levitate", "inanimate", "sizes", "lightly", "crocodile", "legislator", "carousels"], 1)
         @test f4.description== "contains a repeated consonant"
 
         # Intersection
@@ -42,7 +42,7 @@
 
         # Set 4
         f4 = best_feature(["formally", "thinnest", "businesswoman", "communicated", "hallucinogen", "saccharin", "cellophane"])
-        @test f4.description == "contains a double letter"
+        @test f4.description == "contains 1 double letters"
     end
 
     @testset "diagram 3" begin

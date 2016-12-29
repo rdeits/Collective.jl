@@ -7,7 +7,7 @@
 
 
     f3 = best_feature(["almost", "biopsy", "chimp", "films", "ghost", "tux"])
-    @test f3.description == "has 0 reverse alphabetical bigrams"
+    @test f3.description == "has at least 1 reverse alphabetical bigrams"
 
     f4 = best_feature(["balked", "barspoon", "highnoon", "klutzy", "onyx", "posted"])
     @test f4.description == "has at least 2 reverse sequential bigrams"

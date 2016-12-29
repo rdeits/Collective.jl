@@ -69,14 +69,35 @@ function vowel_pattern(word, pattern)
     true
 end
 
-function contains_double_letter(word)
+function num_double_letters(word)
+    c = 0
     for i in 1:(length(word) - 1)
         if word[i] == word[i+1]
-            return true
+            c += 1
         end
     end
-    return false
+    c
 end
+
+function letter_tallies(word)
+    tallies = zeros(UInt8, 26)
+    for c in word
+        tallies[convert(UInt8, c - 96)] += 1
+    end
+    tallies
+end
+
+function num_repeated_letters(word)
+    tallies = letter_tallies(word)
+    c = 0
+    for t in tallies
+        if t > 1
+            c += 1
+        end
+    end
+    c
+end
+
 
 function contains_repeated_letter(word)
     for i in 1:length(word) - 1
@@ -233,8 +254,9 @@ function allfeatures()
         @feature((vowel_pattern(word, (true, false)) || vowel_pattern(word, (false, true))), "alternates consonant vowel")
         @feature((vowel_pattern(word, p) for p in ((true, false), 
                                                    (false, true))), "has vowel/consonant pattern $p")
-        @feature((contains_double_letter(word)), "contains a double letter")
-        @feature(contains_repeated_letter(word), "contains a repeated letter")
+        @feature((num_double_letters(word) == j for j in 1:3), "contains $j double letters")
+        @feature((num_repeated_letters(word) == j for j in 1:7), "contains $j repeated letters")
+        @feature((num_repeated_letters(word) >= j for j in 1:5), "contains at least $j repeated letters")
         @feature(contains_repeated_consonant(word), "contains a repeated consonant")
         @feature(contains_repeated_vowel(word), "contains a repeated vowel")
         @feature(contains_day_of_week(word), "contains a day of the week abbreviation")
