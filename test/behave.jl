@@ -16,15 +16,12 @@ end
 
 @testset "behave clusters" begin
     behave = shuffle([
-            "annieproulx",
-            "commutative",
             "hugoweaving",
             "mountaindew",
             "mozambique",
             "sequoia",
             "annotation",
             "artificial",
-            "engineroom",
             "individual",
             "omnivorous",
             "onlocation",
@@ -35,10 +32,7 @@ end
             "ghost",
             "tux",
             "balked",
-            "barspoon",
             "highnoon",
-            "klutzy",
-            "onyx",
             "posted"])
     c1, f1 = Collective.best_cluster(corpus, behave, 6)
     @test sort(c1) == ["almost", "biopsy", "chimp", "films", "ghost", "tux"]
