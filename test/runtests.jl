@@ -14,6 +14,7 @@ function best_feature(wordlist, allowed_misses=length(wordlist))
     r
 end
 
+include("puzzles/1_2_3.jl")
 include("puzzles/warrant.jl")
 include("puzzles/behave.jl")
 include("puzzles/wordplay.jl")
