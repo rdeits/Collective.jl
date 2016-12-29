@@ -9,10 +9,12 @@ function best_feature(wordlist)
     for result in results[1:100:end]
         @test result.evaluate.(wordlist) == result.satisfied
     end
-    r, _ = findmin(r for r in results if all(r.satisfied))
+    # r, _ = findmin(results)
+    r, _ = findmin(r for r in results if sum(r.satisfied) >= length(r.satisfied) - 1)
     r
 end
 
+include("behave.jl")
 include("wordplay.jl")
 include("venntersections.jl")
 

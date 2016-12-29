@@ -37,35 +37,38 @@ const SCRABBLE_SCORES = Dict{Char, Int}(
     'z' => 10
     )
 
-const VOWELS = Set(collect("aeiouy"))
-const CONSONANTS = Set(collect("bcdfghjklmnpqrstvwxyz"))
-isconsonant(char) = char in CONSONANTS
-isvowel(char) = char in VOWELS
+const VOWELS = "aeiouy"
+const CONSONANTS = "bcdfghjklmnpqrstvwxyz"
+const VOWELS_SET = Set(collect(VOWELS))
+const CONSONANTS_SET = Set(collect(CONSONANTS))
+isconsonant(char) = char in CONSONANTS_SET
+isvowel(char) = char in VOWELS_SET
 
 num_unique_vowels(word) = length(Set(filter(isvowel, word)))
 num_unique_consonants(word) = length(Set(filter(isconsonant, word)))
 num_unique_letters(word) = length(Set(word))
-alternates_consonant_vowel(word) = consonant_then_vowel(word) || vowel_then_consonant(word)
-function consonant_then_vowel(word)
-    expected = true
+
+function vowel_pattern(word, pattern)
+    i = 1
     for c in word
-        if isconsonant(c) != expected
-            return false
+        if pattern[i]
+            if !isvowel(c)
+                return false
+            end
+        else
+            if !isconsonant(c)
+                return false
+            end
         end
-        expected = !expected
+        if i == length(pattern)
+            i = 1
+        else
+            i += 1
+        end
     end
     true
 end
-function vowel_then_consonant(word)
-    expected = true
-    for c in word
-        if isvowel(c) != expected
-            return false
-        end
-        expected = !expected
-    end
-    true
-end
+
 function contains_double_letter(word)
     for i in 1:(length(word) - 1)
         if word[i] == word[i+1]
@@ -80,6 +83,32 @@ function contains_repeated_letter(word)
         for j in (i + 1):length(word)
             if word[i] == word[j]
                 return true
+            end
+        end
+    end
+    return false
+end
+
+function contains_repeated_consonant(word)
+    for i in 1:length(word) - 1
+        if isconsonant(word[i])
+            for j in (i + 1):length(word)
+                if word[i] == word[j]
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
+
+function contains_repeated_vowel(word)
+    for i in 1:length(word) - 1
+        if isvowel(word[i])
+            for j in (i + 1):length(word)
+                if word[i] == word[j]
+                    return true
+                end
             end
         end
     end
@@ -171,24 +200,55 @@ function num_reverse_alpha_bigrams(word)
     count
 end
 
+function num_sequential_bigrams(word)
+    count = 0
+    for i in 1:(length(word) - 1)
+        if word[i] + 1 == word[i+1]
+            count += 1
+        end
+    end
+    count
+end
+
+function num_reverse_sequential_bigrams(word)
+    count = 0
+    for i in 1:(length(word) - 1)
+        if word[i] - 1 == word[i+1]
+            count += 1
+        end
+    end
+    count
+end
+
+
 function allfeatures()
     Feature[
         @feature((scrabble_score(word) == j for j in 1:26), "has scrabble score $j")
         @feature((c in word for c in 'a':'z'), "contains '$c'")
-        @feature((length(word) >= j && word[j] == c for c in 'a':'z', j in 1:26), "contains '$c' at index $j")
-        @feature((length(word) >= j && word[end - j + 1] == c for c in 'a':'z', j in 1:26), "contains '$c' at index $j from end")
+        @feature((length(word) >= j && word[j] == c for c in 'a':'z', j in 1:12), "contains '$c' at index $j")
+        @feature((length(word) >= j && word[end - j + 1] == c for c in 'a':'z', j in 1:6), "contains '$c' at index $j from end")
         @feature((num_unique_vowels(word) == j for j in 1:5), "has $j unique vowels")
         @feature((num_unique_consonants(word) == j for j in 1:21), "has $j unique consonants")
         @feature((num_unique_letters(word) == j for j in 1:26), "has $j unique letters")
-        @feature((alternates_consonant_vowel(word)), "alternates consonant vowel")
+        @feature((vowel_pattern(word, (true, false)) || vowel_pattern(word, (false, true))), "alternates consonant vowel")
+        @feature((vowel_pattern(word, p) for p in ((true, false), 
+                                                   (false, true))), "has vowel/consonant pattern $p")
         @feature((contains_double_letter(word)), "contains a double letter")
         @feature(contains_repeated_letter(word), "contains a repeated letter")
+        @feature(contains_repeated_consonant(word), "contains a repeated consonant")
+        @feature(contains_repeated_vowel(word), "contains a repeated vowel")
         @feature(contains_day_of_week(word), "contains a day of the week abbreviation")
         @feature(is_hill(word), "is a hill word")
         @feature(is_valley(word), "is a valley word")
         @feature(word == reverse(word), "is a palindrome")
         @feature(is_pyramid(word), "is a pyramid word")
         @feature((num_alpha_bigrams(word) == j for j in 0:10), "has $j alphabetical bigrams")
+        @feature((num_alpha_bigrams(word) >= j for j in 1:10), "has at least $j alphabetical bigrams")
         @feature((num_reverse_alpha_bigrams(word) == j for j in 0:10), "has $j reverse alphabetical bigrams")
+        @feature((num_reverse_alpha_bigrams(word) >= j for j in 1:10), "has at least $j reverse alphabetical bigrams")
+        @feature((num_sequential_bigrams(word) == j for j in 0:10), "has $j sequential bigrams")
+        @feature((num_sequential_bigrams(word) >= j for j in 1:10), "has at least $j sequential bigrams")
+        @feature((num_reverse_sequential_bigrams(word) == j for j in 0:10), "has $j reverse sequential bigrams")
+        @feature((num_reverse_sequential_bigrams(word) >= j for j in 1:10), "has at least $j reverse sequential bigrams")
         ]
 end

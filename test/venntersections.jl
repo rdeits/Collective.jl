@@ -18,7 +18,7 @@
 
         # Set 4
         f4 = best_feature(["levitate", "inanimate", "sizes", "lightly", "crocodile", "legislator", "carousels"])
-        @test f4.description== "contains a repeated letter"
+        @test f4.description== "contains a repeated consonant"
 
         # Intersection
         checks = (f1, f2, f3, f4, word -> length(word) == 9)
