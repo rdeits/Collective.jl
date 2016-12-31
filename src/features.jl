@@ -37,10 +37,14 @@ const SCRABBLE_SCORES = Dict{Char, Int}(
     'z' => 10
     )
 
+const ALPHABET = 'a':'z'
 const VOWELS = "aeiouy"
 const CONSONANTS = "bcdfghjklmnpqrstvwxyz"
 const VOWELS_SET = Set(collect(VOWELS))
 const CONSONANTS_SET = Set(collect(CONSONANTS))
+
+const GREEK_REGEX = r"(alpha)|(beta)|(gamma)|(delta)|(epsilon)|(zeta)|(eta)|(theta)|(iota)|(kappa)|(lambda)|(mu)|(nu)|(omicron)|(pi)|(rho)|(sigma)|(tau)|(upsilon)|(phi)|(chi)|(psi)|(omega)"
+
 isconsonant(char) = char in CONSONANTS_SET
 isvowel(char) = char in VOWELS_SET
 
@@ -87,27 +91,20 @@ function letter_tallies(word)
     tallies
 end
 
-function num_repeated_letters(word)
-    tallies = letter_tallies(word)
+function num_repeats_strict(tallies, n)
     c = 0
     for t in tallies
-        if t > 1
-            c += 1
-        end
+        c += (t == n)
     end
     c
 end
 
-
-function contains_repeated_letter(word)
-    for i in 1:length(word) - 1
-        for j in (i + 1):length(word)
-            if word[i] == word[j]
-                return true
-            end
-        end
+function num_repeats(tallies, n)
+    c = 0
+    for t in tallies
+        c += (t >= n)
     end
-    return false
+    c
 end
 
 function contains_repeated_consonant(word)
@@ -255,6 +252,38 @@ function num_cardinal_directions(word)
     num_n + num_e + num_s + num_w
 end
 
+function longest_vowel_streak(word)
+    current_streak = 0
+    longest_streak = 0
+    for c in word
+        if isvowel(c)
+            current_streak += 1
+            if current_streak > longest_streak
+                longest_streak = current_streak
+            end
+        else
+            current_streak = 0
+        end
+    end
+    longest_streak
+end
+
+function longest_consonant_streak(word)
+    current_streak = 0
+    longest_streak = 0
+    for c in word
+        if isconsonant(c)
+            current_streak += 1
+            if current_streak > longest_streak
+                longest_streak = current_streak
+            end
+        else
+            current_streak = 0
+        end
+    end
+    longest_streak
+end
+
 function allfeatures()
     Feature[
         @feature((scrabble_score(word) == j for j in 1:26), "has scrabble score $j")
@@ -268,8 +297,10 @@ function allfeatures()
         @feature((vowel_pattern(word, p) for p in ((true, false), 
                                                    (false, true))), "has vowel/consonant pattern $p")
         @feature((num_double_letters(word) == j for j in 1:3), "contains $j double letters")
-        @feature((num_repeated_letters(word) == j for j in 1:7), "contains $j repeated letters")
-        @feature((num_repeated_letters(word) >= j for j in 1:5), "contains at least $j repeated letters")
+        @feature((num_repeats(letter_tallies(word), i) == j for j in 1:5, i in 2:4), "has $j letters repeated at least $i times each")
+        @feature((num_repeats_strict(letter_tallies(word), i) == j for j in 1:5, i in 2:4), "has $j letters repeated exactly $i times each")
+        @feature((num_repeats(letter_tallies(word), i) >= j for j in 1:5, i in 2:4), "has at least $j letters repeated at least $i times each")
+        @feature((num_repeats_strict(letter_tallies(word), i) >= j for j in 1:5, i in 2:4), "has at least $j letters repeated exactly $i times each")
         @feature(contains_repeated_consonant(word), "contains a repeated consonant")
         @feature(contains_repeated_vowel(word), "contains a repeated vowel")
         @feature(contains_day_of_week(word), "contains a day of the week abbreviation")
@@ -287,5 +318,10 @@ function allfeatures()
         @feature((num_reverse_sequential_bigrams(word) >= j for j in 1:10), "has at least $j reverse sequential bigrams")
         @feature((num_cardinal_directions(word) == j for j in 1:6), "has $j cardinal direction abbreviations (NESW)")
         @feature((num_cardinal_directions(word) >= j for j in 1:6), "has at least $j cardinal direction abbreviations (NESW)")
+        @feature(ismatch(GREEK_REGEX, word), "contains a greek letter")
+        @feature((longest_vowel_streak(word) == j for j in 2:5), "has $j vowels in a row")
+        @feature((longest_vowel_streak(word) >= j for j in 2:5), "has at least $j vowels in a row")
+        @feature((longest_consonant_streak(word) == j for j in 2:5), "has $j consonants in a row")
+        @feature((longest_consonant_streak(word) >= j for j in 2:5), "has at least $j consonants in a row")
         ]
 end
