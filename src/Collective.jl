@@ -2,9 +2,8 @@ __precompile__()
 
 module Collective
 
-import Base: size, getindex, isless
+import Base: size, getindex, isless, show
 using Iterators: subsets
-# using HypothesisTests: BinomialTest, pvalue
 
 include("feature_expressions.jl")
 include("features.jl")
@@ -29,6 +28,8 @@ immutable FeatureResult
 end
 
 (r::FeatureResult)(word::String) = r.evaluate(word)
+
+show(io::IO, r::FeatureResult) = print(io, "Feature: $(sum(r.satisfied))/$(length(r.satisfied)) matches, p=$(r.probability): $(r.description)")
 
 isless(f1::FeatureResult, f2::FeatureResult) = f1.probability < f2.probability
 
