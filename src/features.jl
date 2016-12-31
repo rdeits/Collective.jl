@@ -241,6 +241,19 @@ function num_reverse_sequential_bigrams(word)
     count
 end
 
+function num_cardinal_directions(word)
+    num_n = 0
+    num_e = 0
+    num_s = 0
+    num_w = 0
+    for c in word
+        num_n += c == 'n'
+        num_e += c == 'e'
+        num_s += c == 's'
+        num_w += c == 'w'
+    end
+    num_n + num_e + num_s + num_w
+end
 
 function allfeatures()
     Feature[
@@ -272,5 +285,7 @@ function allfeatures()
         @feature((num_sequential_bigrams(word) >= j for j in 1:10), "has at least $j sequential bigrams")
         @feature((num_reverse_sequential_bigrams(word) == j for j in 0:10), "has $j reverse sequential bigrams")
         @feature((num_reverse_sequential_bigrams(word) >= j for j in 1:10), "has at least $j reverse sequential bigrams")
+        @feature((num_cardinal_directions(word) == j for j in 1:6), "has $j cardinal direction abbreviations (NESW)")
+        @feature((num_cardinal_directions(word) >= j for j in 1:6), "has at least $j cardinal direction abbreviations (NESW)")
         ]
 end
