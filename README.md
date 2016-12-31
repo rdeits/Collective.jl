@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/rdeits/Collective.jl.svg?branch=master)](https://travis-ci.org/rdeits/Collective.jl)
 [![codecov.io](http://codecov.io/github/rdeits/Collective.jl/coverage.svg?branch=master)](http://codecov.io/github/rdeits/Collective.jl?branch=master)
 
-Collective is a Julia package designed to identify interesting *features* from a collection of words. This is a common mechanic in puzzles you might find at, for example, the MIT Mystery Hunt. 
+Collective.jl is a Julia package designed to identify interesting *features* from a collection of words. This is a common mechanic in puzzles you might find at, for example, the MIT Mystery Hunt. 
 
 ## Features
 
@@ -16,6 +16,14 @@ A particular set of words can satisfy many features. For example, if I give you 
 	(n choose k) * f^k * (1 - f)^(n - k)
 
 where `f` is the frequency with wich feature `F` occurs in the population of words (in this case, the dictionary). The most interesting feature is the one whose probability of `k` occurrences is smallest. 
+
+# Installation
+
+From Julia, just do:
+
+```julia
+julia> Pkg.clone("https://github.com/rdeits/Collective.jl.git")
+```
 
 # Examples
 
@@ -54,10 +62,10 @@ julia> results = analyze(corpus, puzzle)
 
 Analyze returns a vector of `FeatureResult`s, each of which contains:
 
-	* A human-readable description of the feature
-	* A function to evaluate that feature
-	* The number of words in the puzzle which match that feature
-	* The binomial probability of that number of matches
+* A human-readable description of the feature
+* A function to evaluate that feature
+* The number of words in the puzzle which match that feature
+* The binomial probability of that number of matches
 
 To get the best features, we can just sort that list:
 
@@ -109,7 +117,7 @@ julia> cluster, feature = best_cluster(corpus, puzzle, 6)
 (String["biopsy","films","chimp","almost","tux","ghost"],Feature: 0/6 matches, p=1.5216925912448385e-15: has at least 1 reverse alphabetical bigrams)
 ```
 
-This one will require some interpretation. The 6 words which were identified are: `["biopsy","films","chimp","almost","tux","ghost"]`. The feature which was returned says that 0 out of the 6 words has one or more reverse alphabetical bigrams, and that the probability of such an occurrence is 1 in 1.5e-15. Putting it another way, it says that *every* word had only alphabetical bigrams, or, more plainly, every word has all of its letters in alphabetical order. This is a cool effect of using the real binomial probabilities: it can sometimes be interesting to find that *none* of a group of words satisfies a particular feature if that feature is usually very common. 
+This one will require some interpretation. The 6 words which were identified are: `["biopsy","films","chimp","almost","tux","ghost"]`. The feature which was returned says that 0 out of the 6 words has one or more reverse alphabetical bigrams, and that the probability of such an occurrence is 1 in 1.5e-15. Putting it another way, it says that *every* word has only alphabetical bigrams, or, more plainly, every word has all of its letters in alphabetical order. This is a cool effect of using the real binomial probabilities: it can sometimes be just as interesting to find that *none* of a group of words satisfies a particular feature.
 
 ## More Demos
 
