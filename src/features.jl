@@ -1,3 +1,45 @@
+function allfeatures()
+    Feature[
+        @feature((scrabble_score(word) == j for j in 1:26), "has scrabble score $j")
+        @feature((c in word for c in 'a':'z'), "contains '$c'")
+        @feature((length(word) >= j && word[j] == c for c in 'a':'z', j in 1:12), "contains '$c' at index $j")
+        @feature((length(word) >= j && word[end - j + 1] == c for c in 'a':'z', j in 1:6), "contains '$c' at index $j from end")
+        @feature((num_unique_vowels(letter_tallies(word)) == j for j in 1:5), "has $j unique vowels")
+        @feature((num_unique_consonants(letter_tallies(word)) == j for j in 1:15), "has $j unique consonants")
+        @feature((num_unique_letters(letter_tallies(word)) == j for j in 1:26), "has $j unique letters")
+        @feature((vowel_pattern(word, (true, false)) || vowel_pattern(word, (false, true))), "alternates consonant vowel")
+        @feature((vowel_pattern(word, p) for p in ((true, false), 
+                                                   (false, true))), "has vowel/consonant pattern $p")
+        @feature((num_double_letters(word) == j for j in 1:3), "contains $j double letters")
+        @feature((num_repeats(letter_tallies(word), i) == j for j in 1:5, i in 2:4), "has $j letters repeated at least $i times each")
+        @feature((num_repeats_strict(letter_tallies(word), i) == j for j in 1:5, i in 2:4), "has $j letters repeated exactly $i times each")
+        @feature((num_repeats(letter_tallies(word), i) >= j for j in 1:5, i in 2:4), "has at least $j letters repeated at least $i times each")
+        @feature((num_repeats_strict(letter_tallies(word), i) >= j for j in 1:5, i in 2:4), "has at least $j letters repeated exactly $i times each")
+        @feature(contains_repeated_consonant(letter_tallies(word)), "contains a repeated consonant")
+        @feature(contains_repeated_vowel(letter_tallies(word)), "contains a repeated vowel")
+        @feature(contains_day_of_week(word), "contains a day of the week abbreviation")
+        @feature(is_hill(word), "is a hill word")
+        @feature(is_valley(word), "is a valley word")
+        @feature(word == reverse(word), "is a palindrome")
+        @feature(is_pyramid(letter_tallies(word)), "is a pyramid word")
+        @feature((num_alpha_bigrams(word) == j for j in 0:10), "has $j alphabetical bigrams")
+        @feature((num_alpha_bigrams(word) >= j for j in 1:10), "has at least $j alphabetical bigrams")
+        @feature((num_reverse_alpha_bigrams(word) == j for j in 0:10), "has $j reverse alphabetical bigrams")
+        @feature((num_reverse_alpha_bigrams(word) >= j for j in 1:10), "has at least $j reverse alphabetical bigrams")
+        @feature((num_sequential_bigrams(word) == j for j in 0:10), "has $j sequential bigrams")
+        @feature((num_sequential_bigrams(word) >= j for j in 1:10), "has at least $j sequential bigrams")
+        @feature((num_reverse_sequential_bigrams(word) == j for j in 0:10), "has $j reverse sequential bigrams")
+        @feature((num_reverse_sequential_bigrams(word) >= j for j in 1:10), "has at least $j reverse sequential bigrams")
+        @feature((num_cardinal_directions(word) == j for j in 1:6), "has $j cardinal direction abbreviations (NESW)")
+        @feature((num_cardinal_directions(word) >= j for j in 1:6), "has at least $j cardinal direction abbreviations (NESW)")
+        @feature(ismatch(GREEK_REGEX, word), "contains a greek letter")
+        @feature((longest_vowel_streak(word) == j for j in 2:5), "has $j vowels in a row")
+        @feature((longest_vowel_streak(word) >= j for j in 2:5), "has at least $j vowels in a row")
+        @feature((longest_consonant_streak(word) == j for j in 2:5), "has $j consonants in a row")
+        @feature((longest_consonant_streak(word) >= j for j in 2:5), "has at least $j consonants in a row")
+        ]
+end
+
 function scrabble_score(word::String)
     score = 0
     for c in word
@@ -38,19 +80,40 @@ const SCRABBLE_SCORES = Dict{Char, Int}(
     )
 
 const ALPHABET = 'a':'z'
-const VOWELS = "aeiouy"
-const CONSONANTS = "bcdfghjklmnpqrstvwxyz"
-const VOWELS_SET = Set(collect(VOWELS))
-const CONSONANTS_SET = Set(collect(CONSONANTS))
+const VOWELS = UInt8[c - 'a' + 1 for c in "aeiouy"]
+const CONSONANTS = UInt8[c - 'a' + 1 for c in "bcdfghjklmnpqrstvwxyz"]
+const VOWELS_SET = Set(ALPHABET[VOWELS])
+const CONSONANTS_SET = Set(ALPHABET[CONSONANTS])
 
 const GREEK_REGEX = r"(alpha)|(beta)|(gamma)|(delta)|(epsilon)|(zeta)|(eta)|(theta)|(iota)|(kappa)|(lambda)|(mu)|(nu)|(omicron)|(pi)|(rho)|(sigma)|(tau)|(upsilon)|(phi)|(chi)|(psi)|(omega)"
 
 isconsonant(char) = char in CONSONANTS_SET
 isvowel(char) = char in VOWELS_SET
 
-num_unique_vowels(word) = length(Set(filter(isvowel, word)))
-num_unique_consonants(word) = length(Set(filter(isconsonant, word)))
-num_unique_letters(word) = length(Set(word))
+
+function num_unique_vowels(tallies)
+    c = 0
+    for x in VOWELS
+        c += (tallies[x] > 0)
+    end
+    c
+end
+
+function num_unique_consonants(tallies)
+    c = 0
+    for x in CONSONANTS
+        c += (tallies[x] > 0)
+    end
+    c
+end
+
+function num_unique_letters(tallies)
+    c = 0
+    for t in tallies
+        c += (t > 0)
+    end
+    c
+end
 
 function vowel_pattern(word, pattern)
     i = 1
@@ -86,7 +149,7 @@ end
 function letter_tallies(word)
     tallies = zeros(UInt8, 26)
     for c in word
-        tallies[convert(UInt8, c - 96)] += 1
+        tallies[convert(UInt8, c - 'a' + 1)] += 1
     end
     tallies
 end
@@ -107,30 +170,22 @@ function num_repeats(tallies, n)
     c
 end
 
-function contains_repeated_consonant(word)
-    for i in 1:length(word) - 1
-        if isconsonant(word[i])
-            for j in (i + 1):length(word)
-                if word[i] == word[j]
-                    return true
-                end
-            end
+function contains_repeated_consonant(tallies)
+    for x in CONSONANTS
+        if tallies[x] > 1
+            return true
         end
     end
-    return false
+    false
 end
 
-function contains_repeated_vowel(word)
-    for i in 1:length(word) - 1
-        if isvowel(word[i])
-            for j in (i + 1):length(word)
-                if word[i] == word[j]
-                    return true
-                end
-            end
+function contains_repeated_vowel(tallies)
+    for x in VOWELS
+        if tallies[x] > 1
+            return true
         end
     end
-    return false
+    false
 end
 
 contains_day_of_week(word) = ismatch(r"(sat)|(sun)|(mon)|(tue)|(wed)|(thu)|(fri)", word)
@@ -139,17 +194,16 @@ contains_day_of_week(word) = ismatch(r"(sat)|(sun)|(mon)|(tue)|(wed)|(thu)|(fri)
 Letters are alpha, then reverse alpha
 """
 function is_hill(word)
-    diffs = diff(collect(word))
     has_rise = false
     has_fall = false
     rising = true
-    for d in diffs
-        if d > 0
+    for i in 1:(length(word) - 1)
+        if word[i + 1] > word[i]
             if !rising
                 return false
             end
             has_rise = true
-        elseif d < 0
+        elseif word[i + 1] < word[i]
             rising = false
             has_fall = true
         end
@@ -161,17 +215,16 @@ end
 Letters are reverse alpha, then alpha
 """
 function is_valley(word)
-    diffs = diff(collect(word))
     has_rise = false
     has_fall = false
     rising = false
-    for d in diffs
-        if d < 0
+    for i in 1:(length(word) - 1)
+        if word[i + 1] < word[i]
             if rising
                 return false
             end
             has_fall = true
-        elseif d > 0
+        elseif word[i + 1] > word[i]
             rising = true
             has_rise = true
         end
@@ -189,12 +242,8 @@ end
 """
 Letter tally is 1, 2, 3, etc.
 """
-function is_pyramid(word)
-    letter_tallies = zeros(Int, 26)
-    for c in word
-        letter_tallies[c - 'a' + 1] += 1
-    end
-    nonzero_tallies = Int[t for t in letter_tallies if t > 0]
+function is_pyramid(tallies)
+    nonzero_tallies = Int[t for t in tallies if t > 0]
     is_sequential(sort!(nonzero_tallies))
 end
 
@@ -282,46 +331,4 @@ function longest_consonant_streak(word)
         end
     end
     longest_streak
-end
-
-function allfeatures()
-    Feature[
-        @feature((scrabble_score(word) == j for j in 1:26), "has scrabble score $j")
-        @feature((c in word for c in 'a':'z'), "contains '$c'")
-        @feature((length(word) >= j && word[j] == c for c in 'a':'z', j in 1:12), "contains '$c' at index $j")
-        @feature((length(word) >= j && word[end - j + 1] == c for c in 'a':'z', j in 1:6), "contains '$c' at index $j from end")
-        @feature((num_unique_vowels(word) == j for j in 1:5), "has $j unique vowels")
-        @feature((num_unique_consonants(word) == j for j in 1:21), "has $j unique consonants")
-        @feature((num_unique_letters(word) == j for j in 1:26), "has $j unique letters")
-        @feature((vowel_pattern(word, (true, false)) || vowel_pattern(word, (false, true))), "alternates consonant vowel")
-        @feature((vowel_pattern(word, p) for p in ((true, false), 
-                                                   (false, true))), "has vowel/consonant pattern $p")
-        @feature((num_double_letters(word) == j for j in 1:3), "contains $j double letters")
-        @feature((num_repeats(letter_tallies(word), i) == j for j in 1:5, i in 2:4), "has $j letters repeated at least $i times each")
-        @feature((num_repeats_strict(letter_tallies(word), i) == j for j in 1:5, i in 2:4), "has $j letters repeated exactly $i times each")
-        @feature((num_repeats(letter_tallies(word), i) >= j for j in 1:5, i in 2:4), "has at least $j letters repeated at least $i times each")
-        @feature((num_repeats_strict(letter_tallies(word), i) >= j for j in 1:5, i in 2:4), "has at least $j letters repeated exactly $i times each")
-        @feature(contains_repeated_consonant(word), "contains a repeated consonant")
-        @feature(contains_repeated_vowel(word), "contains a repeated vowel")
-        @feature(contains_day_of_week(word), "contains a day of the week abbreviation")
-        @feature(is_hill(word), "is a hill word")
-        @feature(is_valley(word), "is a valley word")
-        @feature(word == reverse(word), "is a palindrome")
-        @feature(is_pyramid(word), "is a pyramid word")
-        @feature((num_alpha_bigrams(word) == j for j in 0:10), "has $j alphabetical bigrams")
-        @feature((num_alpha_bigrams(word) >= j for j in 1:10), "has at least $j alphabetical bigrams")
-        @feature((num_reverse_alpha_bigrams(word) == j for j in 0:10), "has $j reverse alphabetical bigrams")
-        @feature((num_reverse_alpha_bigrams(word) >= j for j in 1:10), "has at least $j reverse alphabetical bigrams")
-        @feature((num_sequential_bigrams(word) == j for j in 0:10), "has $j sequential bigrams")
-        @feature((num_sequential_bigrams(word) >= j for j in 1:10), "has at least $j sequential bigrams")
-        @feature((num_reverse_sequential_bigrams(word) == j for j in 0:10), "has $j reverse sequential bigrams")
-        @feature((num_reverse_sequential_bigrams(word) >= j for j in 1:10), "has at least $j reverse sequential bigrams")
-        @feature((num_cardinal_directions(word) == j for j in 1:6), "has $j cardinal direction abbreviations (NESW)")
-        @feature((num_cardinal_directions(word) >= j for j in 1:6), "has at least $j cardinal direction abbreviations (NESW)")
-        @feature(ismatch(GREEK_REGEX, word), "contains a greek letter")
-        @feature((longest_vowel_streak(word) == j for j in 2:5), "has $j vowels in a row")
-        @feature((longest_vowel_streak(word) >= j for j in 2:5), "has at least $j vowels in a row")
-        @feature((longest_consonant_streak(word) == j for j in 2:5), "has $j consonants in a row")
-        @feature((longest_consonant_streak(word) >= j for j in 2:5), "has at least $j consonants in a row")
-        ]
 end

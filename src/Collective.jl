@@ -5,13 +5,30 @@ module Collective
 import Base: size, getindex, isless, show
 using Iterators: subsets
 
+export Corpus, 
+       wordlist,
+       analyze,
+       best_feature,
+       best_cluster,
+       common_features
+
 include("feature_expressions.jl")
 include("features.jl")
+
+function wordlist(data::IO)
+    words = lowercase.(strip.(vec(readdlm(data, ',', String))))
+    for i in 1:length(words)
+        words[i] = replace(words[i], r"[^a-z]", "")
+    end
+    words
+end
 
 type Corpus{F}
     features::FeatureSet{F}
     frequencies::Vector{Float64}
 end
+
+show(io::IO, c::Corpus) = print(io, "Corpus with $(length(c.features.descriptions)) features")
 
 function Corpus(words::AbstractArray{String}, features=allfeatures())
     featureset = FeatureSet(features)

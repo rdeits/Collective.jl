@@ -1,8 +1,9 @@
 using Collective
 using Base.Test
 
-words = lowercase.(strip.(split(readstring("../data/113809of.fic"))))
-corpus = Collective.Corpus(words[1:Int(round(length(words) / 10000)):end])
+const words = wordlist(open("../data/113809of.fic"))
+const corpus = Collective.Corpus(words[1:Int(round(length(words) / 10000)):end])
+@time Collective.Corpus(words[1:Int(round(length(words) / 10000)):end])
 
 function best_feature(wordlist, allowed_misses=length(wordlist))
     results = Collective.analyze(corpus, wordlist)

@@ -8,10 +8,15 @@ end
 
 cacheify!(setup, expr, input_var::Symbol) = expr
 
-function cacheify!(setup::Vector{Expr}, expr::Expr, input_var::Symbol)
+function cacheify!(setup::Dict{Symbol, Tuple{Symbol, Expr}}, expr::Expr, input_var::Symbol)
     if expr.head == :call && length(expr.args) == 2 && expr.args[2] == input_var
-        cached_varname = gensym(expr.args[1])
-        push!(setup, :($cached_varname = $(copy(expr))))
+        function_name = expr.args[1]
+        if !haskey(setup, function_name)
+            cached_varname = gensym(expr.args[1])
+            setup[function_name] = (cached_varname, :($cached_varname = $(copy(expr))))
+        else
+            cached_varname = setup[function_name][1]
+        end
         cached_varname
     else
         for (i, child) in enumerate(expr.args)
@@ -22,9 +27,9 @@ function cacheify!(setup::Vector{Expr}, expr::Expr, input_var::Symbol)
 end
 
 function cacheify(expr::Expr, var::Symbol)
-    setup = Expr[]
+    setup = Dict{Symbol, Tuple{Symbol, Expr}}()
     expr = cacheify!(setup, copy(expr), var)
-    Expr(:block, setup..., expr)
+    Expr(:block, [v[2] for v in values(setup)]..., expr)
 end
 
 immutable Feature
