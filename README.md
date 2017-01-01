@@ -19,7 +19,9 @@ where `f` is the frequency with wich feature `F` occurs in the population of wor
 
 # Installation
 
-From Julia, just do:
+If you don't have Julia installed, you can run Collective in [JuliaBox](https://juliabox.com/). Just log in with Google or Github and then upload the demo notebook [collective.ipynb](https://github.com/rdeits/Collective.jl/blob/master/collective.ipynb). 
+
+Otherwise, from Julia, just do:
 
 ```julia
 julia> Pkg.clone("https://github.com/rdeits/Collective.jl.git")
