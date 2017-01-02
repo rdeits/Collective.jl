@@ -37,6 +37,9 @@ function allfeatures()
         @feature((longest_vowel_streak(word) >= j for j in 2:5), "has at least $j vowels in a row")
         @feature((longest_consonant_streak(word) == j for j in 2:5), "has $j consonants in a row")
         @feature((longest_consonant_streak(word) >= j for j in 2:5), "has at least $j consonants in a row")
+        @feature((num_morse_bits(letter_tallies(word)) == j for j in 1:10), "has $j morse bits ('i's and 't's)")
+        @feature((num_morse_bits(letter_tallies(word)) >= j for j in 1:5), "has at least $j morse bits ('i's and 't's)")
+        @feature(ismatch(ENTIRELY_ELEMENTS_REGEX, word), "can be completely broken down into chemical element symbols")
         ]
 end
 
@@ -84,6 +87,13 @@ const VOWELS = UInt8[c - 'a' + 1 for c in "aeiouy"]
 const CONSONANTS = UInt8[c - 'a' + 1 for c in "bcdfghjklmnpqrstvwxyz"]
 const VOWELS_SET = Set(ALPHABET[VOWELS])
 const CONSONANTS_SET = Set(ALPHABET[CONSONANTS])
+const ELEMENT_DATA = readdlm(joinpath(Pkg.dir("Collective"), "data/elements.tsv"), '\t', String, skipstart=1)
+const ELEMENTAL_SYMBOLS = lowercase.(strip.(ELEMENT_DATA[:,2]))
+
+parenwrap(s) = "($s)"
+
+const SINGLE_ELEMENT_REGEX = Regex("$(join((parenwrap(s) for s in ELEMENTAL_SYMBOLS), '|'))")
+const ENTIRELY_ELEMENTS_REGEX = Regex("^($(join((parenwrap(s) for s in ELEMENTAL_SYMBOLS), '|')))*\$")
 
 const GREEK_REGEX = r"(alpha)|(beta)|(gamma)|(delta)|(epsilon)|(zeta)|(eta)|(theta)|(iota)|(kappa)|(lambda)|(mu)|(nu)|(omicron)|(pi)|(rho)|(sigma)|(tau)|(upsilon)|(phi)|(chi)|(psi)|(omega)"
 
@@ -331,4 +341,12 @@ function longest_consonant_streak(word)
         end
     end
     longest_streak
+end
+
+num_morse_bits(tallies) = tallies['t' - 'a' + 1] + tallies['i' - 'a' + 1]
+
+function num_elemental_symbols(word)
+    i = 0
+    foreach((m) -> i += 1, eachmatch(SINGLE_ELEMENT_REGEX, word, true))
+    i
 end
