@@ -1,0 +1,119 @@
+Z 	Sym 	Element 	Origin of name[1][2] 	Group 	Period 	Atomic weight 	Density 	Melt	Boil	C10	χ10 	Abundance (mg/kg)
+1 	H 	Hydrogen 	composed of the Greek elements hydro- and -gen meaning 'water-forming' 	1 	1 	1.0082 3 4 9 	0.00008988 	14.01 	20.28 	14.304 	2.20 	1400
+2 	He 	Helium 	the Greek helios, 'sun' 	18 	1 	4.002602(2)2 4 	0.0001785 	0.956 	4.22 	5.193 	– 	0.008
+3 	Li 	Lithium 	the Greek lithos, 'stone' 	1 	2 	6.942 3 4 5 9 	0.534 	453.69 	1560 	3.582 	0.98 	20
+4 	Be 	Beryllium 	beryl, a mineral 	2 	2 	9.0121831(5) 	1.85 	1560 	2742 	1.825 	1.57 	2.8
+5 	B 	Boron 	borax, a mineral 	13 	2 	10.812 3 4 9 	2.34 	2349 	4200 	1.026 	2.04 	10
+6 	C 	Carbon 	the Latin carbo, 'coal' 	14 	2 	12.0112 4 9 	2.267 	3800 	4300 	0.709 	2.55 	200
+7 	N 	Nitrogen 	the Greek nitron and '-gen' meaning 'niter-forming' 	15 	2 	14.0072 4 9 	0.0012506 	63.15 	77.36 	1.04 	3.04 	19
+8 	O 	Oxygen 	from the Greek oxy-, both 'sharp' and 'acid', and -gen, meaning 'acid-forming' 	16 	2 	15.9992 4 9 	0.001429 	54.36 	90.20 	0.918 	3.44 	461000
+9 	F 	Fluorine 	the Latin fluere, 'to flow' 	17 	2 	18.998403163(6) 	0.001696 	53.53 	85.03 	0.824 	3.98 	585
+10 	Ne 	Neon 	the Greek neos, meaning 'new' 	18 	2 	20.1797(6)2 3 	0.0008999 	24.56 	27.07 	1.03 	– 	0.005
+11 	Na 	Sodium 	the English word soda (natrium in Latin)[3] 	1 	3 	22.98976928(2) 	0.971 	370.87 	1156 	1.228 	0.93 	23600
+12 	Mg 	Magnesium 	Magnesia, a district of Eastern Thessaly in Greece 	2 	3 	24.3059 	1.738 	923 	1363 	1.023 	1.31 	23300
+13 	Al 	Aluminium 	from alumina, a compound (originally aluminum) 	13 	3 	26.9815385(7) 	2.698 	933.47[4] 	2792 	0.897 	1.61 	82300
+14 	Si 	Silicon 	from the Latin silex, 'flint' (originally silicium) 	14 	3 	28.0854 9 	2.3296 	1687 	3538 	0.705 	1.9 	282000
+15 	P 	Phosphorus 	the Greek phoosphoros, 'carrying light' 	15 	3 	30.973761998(5) 	1.82 	317.30 	550 	0.769 	2.19 	1050
+16 	S 	Sulfur 	the Latin sulphur, 'fire and brimstone'[5] 	16 	3 	32.062 4 9 	2.067 	388.36 	717.87 	0.71 	2.58 	350
+17 	Cl 	Chlorine 	the Greek chloros, 'greenish yellow' 	17 	3 	35.452 3 4 9 	0.003214 	171.6 	239.11 	0.479 	3.16 	145
+18 	Ar 	Argon 	the Greek argos, 'idle' 	18 	3 	39.948(1)2 4 	0.0017837 	83.80 	87.30 	0.52 	– 	3.5
+19 	K 	Potassium 	New Latin potassa, 'potash' (kalium in Latin)[3] 	1 	4 	39.0983(1) 	0.862 	336.53 	1032 	0.757 	0.82 	20900
+20 	Ca 	Calcium 	the Latin calx, 'lime' 	2 	4 	40.078(4)2 	1.54 	1115 	1757 	0.647 	1 	41500
+21 	Sc 	Scandium 	Scandia, the Latin name for Scandinavia 	3 	4 	44.955908(5) 	2.989 	1814 	3109 	0.568 	1.36 	22
+22 	Ti 	Titanium 	Titans, the sons of the Earth goddess of Greek mythology 	4 	4 	47.867(1) 	4.54 	1941 	3560 	0.523 	1.54 	5650
+23 	V 	Vanadium 	Vanadis, an Old Norse name for the Scandinavian goddess Freyja 	5 	4 	50.9415(1) 	6.11 	2183 	3680 	0.489 	1.63 	120
+24 	Cr 	Chromium 	the Greek chroma, 'color' 	6 	4 	51.9961(6) 	7.15 	2180 	2944 	0.449 	1.66 	102
+25 	Mn 	Manganese 	corrupted from magnesia negra, see Magnesium 	7 	4 	54.938044(3) 	7.44 	1519 	2334 	0.479 	1.55 	950
+26 	Fe 	Iron 	English word (ferrum in Latin) 	8 	4 	55.845(2) 	7.874 	1811 	3134 	0.449 	1.83 	56300
+27 	Co 	Cobalt 	the German word Kobold, 'goblin' 	9 	4 	58.933194(4) 	8.86 	1768 	3200 	0.421 	1.88 	25
+28 	Ni 	Nickel 	from Swedish kopparnickel, containing the German word Nickel, 'goblin' 	10 	4 	58.6934(4) 	8.912 	1728 	3186 	0.444 	1.91 	84
+29 	Cu 	Copper 	English word (Latin cuprum) 	11 	4 	63.546(3)4 	8.96 	1357.77[4] 	2835 	0.385 	1.9 	60
+30 	Zn 	Zinc 	the German Zink 	12 	4 	65.38(2) 	7.134 	692.88 	1180 	0.388 	1.65 	70
+31 	Ga 	Gallium 	Gallia, the Latin name for France 	13 	4 	69.723(1) 	5.907 	302.9146 	2673 	0.371 	1.81 	19
+32 	Ge 	Germanium 	Germania, the Latin name for Germany 	14 	4 	72.630(8) 	5.323 	1211.40 	3106 	0.32 	2.01 	1.5
+33 	As 	Arsenic 	English word (Latin arsenicum) 	15 	4 	74.921595(6) 	5.776 	1090 7 	887 	0.329 	2.18 	1.8
+34 	Se 	Selenium 	the Greek selene, 'moon' 	16 	4 	78.971(8)4 	4.809 	453 	958 	0.321 	2.55 	0.05
+35 	Br 	Bromine 	the Greek bromos, 'stench' 	17 	4 	79.9049 	3.122 	265.8 	332.0 	0.474 	2.96 	2.4
+36 	Kr 	Krypton 	the Greek kryptos, 'hidden' 	18 	4 	83.798(2)2 3 	0.003733 	115.79 	119.93 	0.248 	3 	1×10−4
+37 	Rb 	Rubidium 	the Latin rubidus, 'deep red' 	1 	5 	85.4678(3)2 	1.532 	312.46 	961 	0.363 	0.82 	90
+38 	Sr 	Strontium 	Strontian, a small town in Scotland 	2 	5 	87.62(1)2 4 	2.64 	1050 	1655 	0.301 	0.95 	370
+39 	Y 	Yttrium 	Ytterby, Sweden 	3 	5 	88.90584(2) 	4.469 	1799 	3609 	0.298 	1.22 	33
+40 	Zr 	Zirconium 	Persian Zargun, 'gold-colored'; German Zirkoon, 'jargoon' 	4 	5 	91.224(2)2 	6.506 	2128 	4682 	0.278 	1.33 	165
+41 	Nb 	Niobium 	Niobe, daughter of king Tantalus from Greek mythology 	5 	5 	92.90637(2) 	8.57 	2750 	5017 	0.265 	1.6 	20
+42 	Mo 	Molybdenum 	the Greek molybdos meaning 'lead' 	6 	5 	95.95(1)2 	10.22 	2896 	4912 	0.251 	2.16 	1.2
+43 	Tc 	Technetium 	the Greek tekhnètos meaning 'artificial' 	7 	5 	[98]1 	11.5 	2430 	4538 	– 	1.9 	~ 3×10−9
+44 	Ru 	Ruthenium 	Ruthenia, the New Latin name for Russia 	8 	5 	101.07(2)2 	12.37 	2607 	4423 	0.238 	2.2 	0.001
+45 	Rh 	Rhodium 	the Greek rhodos, meaning 'rose coloured' 	9 	5 	102.90550(2) 	12.41 	2237 	3968 	0.243 	2.28 	0.001
+46 	Pd 	Palladium 	the then recently discovered asteroid Pallas, considered a planet at the time 	10 	5 	106.42(1)2 	12.02 	1828.05 	3236 	0.244 	2.2 	0.015
+47 	Ag 	Silver 	English word (argentum in Latin)[3] 	11 	5 	107.8682(2)2 	10.501 	1234.93[4] 	2435 	0.235 	1.93 	0.075
+48 	Cd 	Cadmium 	the New Latin cadmia, from King Kadmos 	12 	5 	112.414(4)2 	8.69 	594.22 	1040 	0.232 	1.69 	0.159
+49 	In 	Indium 	indigo 	13 	5 	114.818(1) 	7.31 	429.75 	2345 	0.233 	1.78 	0.25
+50 	Sn 	Tin 	English word (stannum in Latin) 	14 	5 	118.710(7)2 	7.287 	505.08 	2875 	0.228 	1.96 	2.3
+51 	Sb 	Antimony 	composed from the Greek anti, 'against', and monos, 'alone' (stibium in Latin) 	15 	5 	121.760(1)2 	6.685 	903.78 	1860 	0.207 	2.05 	0.2
+52 	Te 	Tellurium 	Latin tellus, 'earth' 	16 	5 	127.60(3)2 	6.232 	722.66 	1261 	0.202 	2.1 	0.001
+53 	I 	Iodine 	French iode (after the Greek ioeides, 'violet') 	17 	5 	126.90447(3) 	4.93 	386.85 	457.4 	0.214 	2.66 	0.45
+54 	Xe 	Xenon 	the Greek xenos, 'strange' 	18 	5 	131.293(6)2 3 	0.005887 	161.4 	165.03 	0.158 	2.6 	3×10−5
+55 	Cs 	Caesium 	the Latin caesius, 'sky blue' 	1 	6 	132.90545196(6) 	1.873 	301.59 	944 	0.242 	0.79 	3
+56 	Ba 	Barium 	the Greek barys, 'heavy' 	2 	6 	137.327(7) 	3.594 	1000 	2170 	0.204 	0.89 	425
+57 	La 	Lanthanum 	the Greek lanthanein, 'to lie hidden' 		6 	138.90547(7)2 	6.145 	1193 	3737 	0.195 	1.1 	39
+58 	Ce 	Cerium 	the then recently discovered asteroid Ceres, considered a planet at the time 		6 	140.116(1)2 	6.77 	1068 	3716 	0.192 	1.12 	66.5
+59 	Pr 	Praseodymium 	the Greek praseios didymos meaning 'green twin' 		6 	140.90766(2) 	6.773 	1208 	3793 	0.193 	1.13 	9.2
+60 	Nd 	Neodymium 	the Greek neos didymos meaning 'new twin' 		6 	144.242(3)2 	7.007 	1297 	3347 	0.19 	1.14 	41.5
+61 	Pm 	Promethium 	Prometheus of Greek mythology who stole fire from the Gods and gave it to humans 		6 	[145]1 	7.26 	1315 	3273 	– 	1.13 	2×10−19
+62 	Sm 	Samarium 	Samarskite, the name of the mineral from which it was first isolated 		6 	150.36(2)2 	7.52 	1345 	2067 	0.197 	1.17 	7.05
+63 	Eu 	Europium 	Europe 		6 	151.964(1)2 	5.243 	1099 	1802 	0.182 	1.2 	2
+64 	Gd 	Gadolinium 	Johan Gadolin, chemist, physicist and mineralogist 		6 	157.25(3)2 	7.895 	1585 	3546 	0.236 	1.2 	6.2
+65 	Tb 	Terbium 	Ytterby, Sweden 		6 	158.92535(2) 	8.229 	1629 	3503 	0.182 	1.2 	1.2
+66 	Dy 	Dysprosium 	the Greek dysprositos, 'hard to get' 		6 	162.500(1)2 	8.55 	1680 	2840 	0.17 	1.22 	5.2
+67 	Ho 	Holmium 	Holmia, the New Latin name for Stockholm 		6 	164.93033(2) 	8.795 	1734 	2993 	0.165 	1.23 	1.3
+68 	Er 	Erbium 	Ytterby, Sweden 		6 	167.259(3)2 	9.066 	1802 	3141 	0.168 	1.24 	3.5
+69 	Tm 	Thulium 	Thule, the ancient name for Scandinavia 		6 	168.93422(2) 	9.321 	1818 	2223 	0.16 	1.25 	0.52
+70 	Yb 	Ytterbium 	Ytterby, Sweden 		6 	173.045(10)2 	6.965 	1097 	1469 	0.155 	1.1 	3.2
+71 	Lu 	Lutetium 	Lutetia, the Latin name for Paris 	3 	6 	174.9668(1)2 	9.84 	1925 	3675 	0.154 	1.27 	0.8
+72 	Hf 	Hafnium 	Hafnia, the New Latin name for Copenhagen 	4 	6 	178.49(2) 	13.31 	2506 	4876 	0.144 	1.3 	3
+73 	Ta 	Tantalum 	King Tantalus, father of Niobe from Greek mythology 	5 	6 	180.94788(2) 	16.654 	3290 	5731 	0.14 	1.5 	2
+74 	W 	Tungsten 	the Swedish tung sten, 'heavy stone' (W is wolfram, the old name of the tungsten mineral wolframite)[3] 	6 	6 	183.84(1) 	19.25 	3695 	5828 	0.132 	2.36 	1.3
+75 	Re 	Rhenium 	Rhenus, the Latin name for the river Rhine 	7 	6 	186.207(1) 	21.02 	3459 	5869 	0.137 	1.9 	7×10−4
+76 	Os 	Osmium 	the Greek osmè, meaning 'smell' 	8 	6 	190.23(3)2 	22.61 	3306 	5285 	0.13 	2.2 	0.002
+77 	Ir 	Iridium 	Iris, the Greek goddess of the rainbow 	9 	6 	192.217(3) 	22.56 	2719 	4701 	0.131 	2.2 	0.001
+78 	Pt 	Platinum 	the Spanish platina, meaning 'little silver' 	10 	6 	195.084(9) 	21.46 	2041.4[4] 	4098 	0.133 	2.28 	0.005
+79 	Au 	Gold 	English word (aurum in Latin) 	11 	6 	196.966569(5) 	19.282 	1337.33[4] 	3129 	0.129 	2.54 	0.004
+80 	Hg 	Mercury 	the New Latin name mercurius, named after the Roman god (Hg from former name hydrargyrum, from Greek hydr-, 'water', and argyros, 'silver') 	12 	6 	200.592(3) 	13.5336 	234.43 	629.88 	0.14 	2 	0.085
+81 	Tl 	Thallium 	the Greek thallos, 'green twig' 	13 	6 	204.389 	11.85 	577 	1746 	0.129 	1.62 	0.85
+82 	Pb 	Lead 	English word (plumbum in Latin)[3] 	14 	6 	207.2(1)2 4 	11.342 	600.61 	2022 	0.129 	1.87 	14
+83 	Bi 	Bismuth 	German word, now obsolete 	15 	6 	208.98040(1)1 	9.807 	544.7 	1837 	0.122 	2.02 	0.009
+84 	Po 	Polonium 	Polonia, the New Latin name for Poland 	16 	6 	[209]1 	9.32 	527 	1235 	– 	2.0 	2×10−10
+85 	At 	Astatine 	the Greek astatos, 'unstable' 	17 	6 	[210]1 	7 	575 	610 	– 	2.2 	3×10−20
+86 	Rn 	Radon 	From radium, as it was first detected as an emission from radium during radioactive decay 	18 	6 	[222]1 	0.00973 	202 	211.3 	0.094 	2.2 	4×10−13
+87 	Fr 	Francium 	Francia, the New Latin name for France 	1 	7 	[223]1 	1.87 	300 	950 	– 	0.7 	~ 1×10−18
+88 	Ra 	Radium 	the Latin radius, 'ray' 	2 	7 	[226]1 	5.5 	973 	2010 	0.094 	0.9 	9×10−7
+89 	Ac 	Actinium 	the Greek aktis, 'ray' 		7 	[227]1 	10.07 	1323 	3471 	0.12 	1.1 	5.5×10−10
+90 	Th 	Thorium 	Thor, the Scandinavian god of thunder 		7 	232.0377(4)1 2 	11.72 	2115 	5061 	0.113 	1.3 	9.6
+91 	Pa 	Protactinium 	the Greek protos, 'first', and actinium, which is produced through the radioactive decay of protactinium 		7 	231.03588(2)1 	15.37 	1841 	4300 	– 	1.5 	1.4×10−6
+92 	U 	Uranium 	Uranus, the seventh planet in the Solar System 		7 	238.02891(3)1 	18.95 	1405.3 	4404 	0.116 	1.38 	2.7
+93 	Np 	Neptunium 	Neptune, the eighth planet in the Solar System 		7 	[237]1 	20.45 	917 	4273 	– 	1.36 	≤ 3×10−12
+94 	Pu 	Plutonium 	Pluto, a dwarf planet in the Solar System (considered the ninth planet at the time) 		7 	[244]1 	19.84 	912.5 	3501 	– 	1.28 	≤ 3×10−11
+95 	Am 	Americium 	The Americas, as the element was first synthesized on the continent, by analogy with europium 		7 	[243]1 	13.69 	1449 	2880 	– 	1.13 	0 8
+96 	Cm 	Curium 	Pierre Curie, a physicist, and Marie Curie, a physicist and chemist, named after great scientists by analogy with gadolinium 		7 	[247]1 	13.51 	1613 	3383 	– 	1.28 	0 8
+97 	Bk 	Berkelium 	Berkeley, California, where the element was first synthesized, by analogy with terbium 		7 	[247]1 	14.79 	1259 	2900 	– 	1.3 	0 8
+98 	Cf 	Californium 	California, where the element was first synthesized 		7 	[251]1 	15.1 	1173 	(1743)11 	– 	1.3 	0 8
+99 	Es 	Einsteinium 	Albert Einstein, physicist 		7 	[252]1 	8.84 	1133 	(1269)11 	– 	1.3 	0 8
+100 	Fm 	Fermium 	Enrico Fermi, physicist 		7 	[257]1 	(9.7)11 	(1125)11 	– 	– 	1.3 	0 8
+101 	Md 	Mendelevium 	Dmitri Mendeleev, chemist and inventor 		7 	[258]1 	(10.3)11 	(1100)11 	– 	– 	1.3 	0 8
+102 	No 	Nobelium 	Alfred Nobel, chemist, engineer, innovator, and armaments manufacturer 		7 	[259]1 	(9.9)11 	(1100)11 	– 	– 	1.3 	0 8
+103 	Lr 	Lawrencium 	Ernest O. Lawrence, physicist 	3 	7 	[266]1 	(15.6)11 	(1900)11 	– 	– 	1.3 	0 8
+104 	Rf 	Rutherfordium 	Ernest Rutherford, chemist and physicist 	4 	7 	[267]1 	(23.2)11 	(2400)11 	(5800)11 	– 	– 	0 8
+105 	Db 	Dubnium 	Dubna, Russia 	5 	7 	[268]1 	(29.3)11 	– 	– 	– 	– 	0 8
+106 	Sg 	Seaborgium 	Glenn T. Seaborg, scientist 	6 	7 	[269]1 	(35.0)11 	– 	– 	– 	– 	0 8
+107 	Bh 	Bohrium 	Niels Bohr, physicist 	7 	7 	[270]1 	(37.1)11 	– 	– 	– 	– 	0 8
+108 	Hs 	Hassium 	Hesse, Germany, where the element was first synthesized 	8 	7 	[277]1 	(40.7)11 	– 	– 	– 	– 	0 8
+109 	Mt 	Meitnerium 	Lise Meitner, physicist 	9 	7 	[278]1 	(37.4)11 	– 	– 	– 	– 	0 8
+110 	Ds 	Darmstadtium 	Darmstadt, Germany, where the element was first synthesized 	10 	7 	[281]1 	(34.8)11 	– 	– 	– 	– 	0 8
+111 	Rg 	Roentgenium 	Wilhelm Conrad Röntgen, physicist 	11 	7 	[282]1 	(28.7)11 	– 	– 	– 	– 	0 8
+112 	Cn 	Copernicium 	Nicolaus Copernicus, astronomer 	12 	7 	[285]1 	(23.7)11 	– 	357 12 	– 	– 	0 8
+113 	Nh 	Nihonium 	the Japanese name for Japan, Nihon, where the element was first synthesized 	13 	7 	[286]1 	(16)11 	(700)11 	(1400)11 	– 	– 	0 8
+114 	Fl 	Flerovium 	Georgy Flyorov, physicist 	14 	7 	[289]1 	(14)11 	(340)11 	(420)11 	– 	– 	0 8
+115 	Mc 	Moscovium 	Moscow Oblast, Russia, where the element was first synthesized 	15 	7 	[290]1 	(13.5)11 	(700)11 	(1400)11 	– 	– 	0 8
+116 	Lv 	Livermorium 	Lawrence Livermore National Laboratory (in Livermore, California) which collaborated with JINR on its synthesis 	16 	7 	[293]1 	(12.9)11 	(709)11 	(1085)11 	– 	– 	0 8
+117 	Ts 	Tennessine 	Tennessee, United States 	17 	7 	[294]1 	(7.2)11 	(723)11 	(883)11 	– 	– 	0 8
+118 	Og 	Oganesson 	Yuri Oganessian, physicist 	18 	7 	[294]1 	(5.0)11 13 	(258)11 	(263)11 	– 	– 	0 8
