@@ -4,6 +4,7 @@ module Collective
 
 import Base: size, getindex, isless, show
 using Iterators: subsets
+using DataStructures: OrderedDict
 
 export Corpus, 
        wordlist,
