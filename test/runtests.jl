@@ -16,6 +16,7 @@ function best_feature(wordlist, allowed_misses=length(wordlist))
 end
 
 include("states.jl")
+include("puzzles/phantom_of_the_operator.jl")
 include("puzzles/oklaholmesa_meta.jl")
 include("puzzles/following_the_news.jl")
 include("puzzles/ukacd.jl")
