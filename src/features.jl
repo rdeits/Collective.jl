@@ -40,6 +40,8 @@ function allfeatures()
         @feature((num_morse_bits(letter_tallies(word)) == j for j in 1:10), "has $j morse bits ('i's and 't's)")
         @feature((num_morse_bits(letter_tallies(word)) >= j for j in 1:5), "has at least $j morse bits ('i's and 't's)")
         @feature(ismatch(ENTIRELY_ELEMENTS_REGEX, word), "can be completely broken down into chemical element symbols")
+        @feature(ismatch(ENTIRELY_STATES_REGEX, word), "can be completely broken down into US state abbreviations")
+        @feature((num_state_abbreviations(word) == j for j in 1:5), "contains $j US state abbreviations")
         ]
 end
 
@@ -89,11 +91,16 @@ const VOWELS_SET = Set(ALPHABET[VOWELS])
 const CONSONANTS_SET = Set(ALPHABET[CONSONANTS])
 const ELEMENT_DATA = readdlm(joinpath(Pkg.dir("Collective"), "data/elements.tsv"), '\t', String, skipstart=1)
 const ELEMENTAL_SYMBOLS = lowercase.(strip.(ELEMENT_DATA[:,2]))
+const STATES_DATA = readdlm(joinpath(Pkg.dir("Collective"), "data/states.tsv"), '\t', String, skipstart=1)
+const STATE_ABBREVIATIONS = strip.(lowercase.(STATES_DATA[:,2]))
 
 parenwrap(s) = "($s)"
 
 const SINGLE_ELEMENT_REGEX = Regex("$(join((parenwrap(s) for s in ELEMENTAL_SYMBOLS), '|'))")
 const ENTIRELY_ELEMENTS_REGEX = Regex("^($(join((parenwrap(s) for s in ELEMENTAL_SYMBOLS), '|')))*\$")
+
+const SINGLE_STATE_REGEX = Regex("$(join((parenwrap(s) for s in STATE_ABBREVIATIONS), '|'))")
+const ENTIRELY_STATES_REGEX = Regex("^($(join((parenwrap(s) for s in STATE_ABBREVIATIONS), '|')))*\$")
 
 const GREEK_REGEX = r"(alpha)|(beta)|(gamma)|(delta)|(epsilon)|(zeta)|(eta)|(theta)|(iota)|(kappa)|(lambda)|(mu)|(nu)|(omicron)|(pi)|(rho)|(sigma)|(tau)|(upsilon)|(phi)|(chi)|(psi)|(omega)"
 
@@ -347,6 +354,12 @@ num_morse_bits(tallies) = tallies['t' - 'a' + 1] + tallies['i' - 'a' + 1]
 
 function num_elemental_symbols(word)
     i = 0
-    foreach((m) -> i += 1, eachmatch(SINGLE_ELEMENT_REGEX, word, true))
+    foreach(m -> i += 1, eachmatch(SINGLE_ELEMENT_REGEX, word, true))
+    i
+end
+
+function num_state_abbreviations(word)
+    i = 0
+    foreach(m -> i += 1, eachmatch(SINGLE_STATE_REGEX, word, true))
     i
 end
