@@ -42,6 +42,7 @@ function allfeatures()
         @feature(ismatch(ENTIRELY_ELEMENTS_REGEX, word), "can be completely broken down into chemical element symbols")
         @feature(ismatch(ENTIRELY_STATES_REGEX, word), "can be completely broken down into US state abbreviations")
         @feature((num_state_abbreviations(word) == j for j in 1:5), "contains $j US state abbreviations")
+        @feature(in(word, MA_BELL_EXCHANGES_SET), "is a Ma Bell recommended telephone exchange name")
         ]
 end
 
@@ -89,9 +90,9 @@ const VOWELS = UInt8[c - 'a' + 1 for c in "aeiouy"]
 const CONSONANTS = UInt8[c - 'a' + 1 for c in "bcdfghjklmnpqrstvwxyz"]
 const VOWELS_SET = Set(ALPHABET[VOWELS])
 const CONSONANTS_SET = Set(ALPHABET[CONSONANTS])
-const ELEMENT_DATA = readdlm(joinpath(Pkg.dir("Collective"), "data/elements.tsv"), '\t', String, skipstart=1)
+const ELEMENT_DATA = readdlm(joinpath(Pkg.dir("Collective"), "data", "elements.tsv"), '\t', String, skipstart=1)
 const ELEMENTAL_SYMBOLS = lowercase.(strip.(ELEMENT_DATA[:,2]))
-const STATES_DATA = readdlm(joinpath(Pkg.dir("Collective"), "data/states.tsv"), '\t', String, skipstart=1)
+const STATES_DATA = readdlm(joinpath(Pkg.dir("Collective"), "data", "states.tsv"), '\t', String, skipstart=1)
 const STATE_ABBREVIATIONS = strip.(lowercase.(STATES_DATA[:,2]))
 
 parenwrap(s) = "($s)"
@@ -103,6 +104,8 @@ const SINGLE_STATE_REGEX = Regex("$(join((parenwrap(s) for s in STATE_ABBREVIATI
 const ENTIRELY_STATES_REGEX = Regex("^($(join((parenwrap(s) for s in STATE_ABBREVIATIONS), '|')))*\$")
 
 const GREEK_REGEX = r"(alpha)|(beta)|(gamma)|(delta)|(epsilon)|(zeta)|(eta)|(theta)|(iota)|(kappa)|(lambda)|(mu)|(nu)|(omicron)|(pi)|(rho)|(sigma)|(tau)|(upsilon)|(phi)|(chi)|(psi)|(omega)"
+
+const MA_BELL_EXCHANGES_SET = Set(lowercase.(readdlm(joinpath(Pkg.dir("Collective"), "data", "ma_bell_exchanges.tsv"), '\t', String)))
 
 isconsonant(char) = char in CONSONANTS_SET
 isvowel(char) = char in VOWELS_SET
