@@ -11,6 +11,7 @@ export Corpus,
        analyze,
        best_feature,
        best_cluster,
+       best_clusters,
        common_features
 
 include("feature_expressions.jl")
@@ -94,6 +95,13 @@ function best_feature(corpus::Corpus, vals::AbstractArray{BitArray{1}})
                   p)
 end
 
+immutable Cluster
+    words::Vector{String}
+    feature::FeatureResult
+end
+
+isless(c1::Cluster, c2::Cluster) = c1.feature < c2.feature
+
 function best_cluster(corpus::Corpus, words::AbstractArray{String}, n::Integer)
     vals = evaluate(corpus, words)
     x = Inf
@@ -106,8 +114,13 @@ function best_cluster(corpus::Corpus, words::AbstractArray{String}, n::Integer)
             best_subset = subset
         end
     end
-    words[best_subset], best_feature(corpus, words[best_subset])
+    Cluster(words[best_subset], best_feature(corpus, words[best_subset]))
 end
+
+best_clusters(corpus::Corpus, words::AbstractArray{String}) = 
+    [best_cluster(corpus, words, n) for n in 2:div(length(words), 2) if length(words) % n == 0]
+
+best_cluster(corpus::Corpus, words::AbstractArray{String}) = minimum(best_clusters(corpus, words))
 
 function common_features(featureset::FeatureSet, words::AbstractArray{String})
     vals = featureset.evaluate.(lowercase.(words))

@@ -7,6 +7,6 @@
         (["bedtimebear", "sherman", "stimpy", "mrmagoo"], 'm'),
         (["bettyboop", "sweetpollypurebred", "skeletor", "firefly"], 'e')]
         f = best_feature(names, 0)
-        @test f.description == "contains '$common_letter'"
+        @test f.description == "contains at least 1 '$common_letter's"
     end
 end

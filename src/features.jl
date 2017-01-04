@@ -1,7 +1,8 @@
 function allfeatures()
     Feature[
         @feature((scrabble_score(word) == j for j in 1:26), "has scrabble score $j")
-        @feature((c in word for c in 'a':'z'), "contains '$c'")
+        @feature((letter_tallies(word)[c - 'a' + 1] == j for j in 1:5, c in 'a':'z'), "contains $j '$c's")
+        @feature((letter_tallies(word)[c - 'a' + 1] >= j for j in 1:5, c in 'a':'z'), "contains at least $j '$c's")
         @feature((length(word) >= j && word[j] == c for c in 'a':'z', j in 1:12), "contains '$c' at index $j")
         @feature((length(word) >= j && word[end - j + 1] == c for c in 'a':'z', j in 1:6), "contains '$c' at index $j from end")
         @feature((num_unique_vowels(letter_tallies(word)) == j for j in 1:5), "has $j unique vowels")
