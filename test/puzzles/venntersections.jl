@@ -52,7 +52,7 @@
 
         # Set 3
         f3 = best_feature(["thumbtacks", "monologue", "testimony", "camel", "meteorology", "trampoline", "achievement"])
-        @test f3.description == "contains 'm'"
+        @test f3.description == "contains 1 'm's"
 
         # Set 4
         f4 = best_feature(["monologue", "frigidities", "satirizing", "meteorology", "avalance", "achievement", "constitute"])
