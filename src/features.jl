@@ -44,6 +44,8 @@ function allfeatures()
         @feature(ismatch(ENTIRELY_STATES_REGEX, word), "can be completely broken down into US state abbreviations")
         @feature((num_state_abbreviations(word) == j for j in 1:5), "contains $j US state abbreviations")
         @feature(in(word, MA_BELL_EXCHANGES_SET), "is a Ma Bell recommended telephone exchange name")
+        @feature(has_transaddition(BitsTally(word)), "has a single-letter transaddition")
+        @feature(has_transdeletion(BitsTally(word)), "has a single-letter transdeletion")
         ]
 end
 
@@ -95,6 +97,27 @@ const ELEMENT_DATA = readdlm(joinpath(Pkg.dir("Collective"), "data", "elements.t
 const ELEMENTAL_SYMBOLS = lowercase.(strip.(ELEMENT_DATA[:,2]))
 const STATES_DATA = readdlm(joinpath(Pkg.dir("Collective"), "data", "states.tsv"), '\t', String, skipstart=1)
 const STATE_ABBREVIATIONS = strip.(lowercase.(STATES_DATA[:,2]))
+const WORDS = wordlist(open(joinpath(Pkg.dir("Collective"), "data", "113809of.fic")))
+
+const bitstallies = collect(Set(BitsTally.(WORDS)))
+
+function has_transaddition(t::BitsTally)
+    for other in bitstallies
+        if istransaddition(other, t)
+            return true
+        end
+    end
+    return false
+end
+
+function has_transdeletion(t::BitsTally)
+    for other in bitstallies
+        if istransaddition(t, other)
+            return true
+        end
+    end
+    return false
+end
 
 parenwrap(s) = "($s)"
 
