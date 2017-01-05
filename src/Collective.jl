@@ -14,9 +14,6 @@ export Corpus,
        best_clusters,
        common_features
 
-include("feature_expressions.jl")
-include("features.jl")
-
 function wordlist(data::IO)
     words = lowercase.(strip.(vec(readdlm(data, ',', String))))
     for i in 1:length(words)
@@ -24,6 +21,11 @@ function wordlist(data::IO)
     end
     words
 end
+
+include("bitstally.jl")
+import .BitsTallies: BitsTally, isanagram, istransaddition
+include("feature_expressions.jl")
+include("features.jl")
 
 type Corpus{F}
     features::FeatureSet{F}
