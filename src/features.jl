@@ -44,8 +44,8 @@ function allfeatures()
         @feature(ismatch(ENTIRELY_STATES_REGEX, word), "can be completely broken down into US state abbreviations")
         @feature((num_state_abbreviations(word) == j for j in 1:5), "contains $j US state abbreviations")
         @feature(in(word, MA_BELL_EXCHANGES_SET), "is a Ma Bell recommended telephone exchange name")
-        @feature(has_transaddition(BitsTally(word)), "has a single-letter transaddition")
-        @feature(has_transdeletion(BitsTally(word)), "has a single-letter transdeletion")
+        @feature(has_transaddition(BitsTally(word)), "has a 1-letter transaddition")
+        @feature(has_transdeletion(BitsTally(word)), "has a 1-letter transdeletion")
         ]
 end
 
