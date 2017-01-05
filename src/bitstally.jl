@@ -1,6 +1,6 @@
 module BitsTallies
 
-import Base: getindex, +
+import Base: getindex, +, -
 
 const BITS = 5
 const mask = UInt8(2 ^ BITS - 1)
@@ -30,6 +30,8 @@ end
 Add a single count for char c to the tally t. 
 """
 +(t::BitsTally, c::Char) = BitsTally(t.data + charmasks[convert(Int, c - 'a' + 1)])
+
+-(t::BitsTally, c::Char) = BitsTally(t.data - charmasks[convert(Int, c - 'a' + 1)])
 
 function BitsTally(s::String)
     t = BitsTally()

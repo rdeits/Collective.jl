@@ -99,11 +99,11 @@ const STATES_DATA = readdlm(joinpath(Pkg.dir("Collective"), "data", "states.tsv"
 const STATE_ABBREVIATIONS = strip.(lowercase.(STATES_DATA[:,2]))
 const WORDS = wordlist(open(joinpath(Pkg.dir("Collective"), "data", "113809of.fic")))
 
-const bitstallies = collect(Set(BitsTally.(WORDS)))
+const bitstallies = Set(BitsTally.(WORDS))
 
 function has_transaddition(t::BitsTally)
-    for other in bitstallies
-        if istransaddition(other, t)
+    for letter in 'a':'z'
+        if (t + letter) in bitstallies
             return true
         end
     end
@@ -111,8 +111,8 @@ function has_transaddition(t::BitsTally)
 end
 
 function has_transdeletion(t::BitsTally)
-    for other in bitstallies
-        if istransaddition(t, other)
+    for letter in 'a':'z'
+        if (t - letter) in bitstallies
             return true
         end
     end
