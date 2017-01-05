@@ -2,20 +2,18 @@ using Collective
 using Base.Test
 
 const words = wordlist(open("../data/113809of.fic"))
-const corpus = Collective.Corpus(words[1:Int(round(length(words) / 10000)):end])
-@time Collective.Corpus(words[1:Int(round(length(words) / 10000)):end])
+@time const corpus = Collective.Corpus(words[1:Int(round(length(words) / 10000)):end])
 
 function best_feature(wordlist, allowed_misses=length(wordlist))
-    results = Collective.analyze(corpus, wordlist)
+    results = Collective.analyze(corpus, wordlist, allowed_misses)
     for result in results[1:100:end]
         @test result.evaluate.(wordlist) == result.satisfied
     end
-    # r, _ = findmin(results)
-    r, _ = findmin(r for r in results if sum(r.satisfied) >= length(r.satisfied) - allowed_misses)
-    r
+    minimum(results)
 end
 
 include("states.jl")
+include("puzzles/1_minus_1_equals_1.jl")
 include("puzzles/circus_line_clustering.jl")
 include("puzzles/phantom_of_the_operator.jl")
 include("puzzles/oklaholmesa_meta.jl")

@@ -75,11 +75,13 @@ function evaluate(corpus::Corpus, words::AbstractArray{String})
     corpus.features.evaluate.(lowercase.(words))
 end
 
-function analyze(corpus::Corpus, words::AbstractArray{String})
+function analyze(corpus::Corpus, words::AbstractArray{String}, allowed_misses=length(words))
     match = evaluate(corpus, words)
     num_matches = sum(match)
     probabilities = binomial_pvalue.(num_matches, length(words), corpus.frequencies)
-    FeatureResult.(corpus.features.descriptions, corpus.features.evaluators, [[m[i] for m in match] for i in 1:length(corpus.features.descriptions)], probabilities)
+    results = FeatureResult.(corpus.features.descriptions, corpus.features.evaluators, [[m[i] for m in match] for i in 1:length(corpus.features.descriptions)], probabilities)
+    required_matches = length(words) - allowed_misses
+    [r for r in results if sum(r.satisfied) >= required_matches]
 end
 
 function best_feature(corpus::Corpus, words::AbstractArray{String})
