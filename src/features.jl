@@ -44,6 +44,8 @@ function allfeatures()
         @feature(ismatch(ENTIRELY_STATES_REGEX, word), "can be completely broken down into US state abbreviations")
         @feature((num_state_abbreviations(word) == j for j in 1:5), "contains $j US state abbreviations")
         @feature(in(word, MA_BELL_EXCHANGES_SET), "is a Ma Bell recommended telephone exchange name")
+        @feature((has_transaddition(BitsTally(word), c) for c in 'a':'z'), "has a transaddition with letter '$c'")
+        @feature((has_transdeletion(BitsTally(word), c) for c in 'a':'z'), "has a transdeletion with letter '$c'")
         @feature(has_transaddition(BitsTally(word)), "has a 1-letter transaddition")
         @feature(has_transdeletion(BitsTally(word)), "has a 1-letter transdeletion")
         ]
@@ -101,9 +103,12 @@ const WORDS = wordlist(open(joinpath(Pkg.dir("Collective"), "data", "113809of.fi
 
 const bitstallies = Set(BitsTally.(WORDS))
 
+has_transaddition(t::BitsTally, c::Char) = (t + c) in bitstallies
+has_transdeletion(t::BitsTally, c::Char) = (t - c) in bitstallies
+
 function has_transaddition(t::BitsTally)
     for letter in 'a':'z'
-        if (t + letter) in bitstallies
+        if has_transaddition(t, letter)
             return true
         end
     end
@@ -112,12 +117,14 @@ end
 
 function has_transdeletion(t::BitsTally)
     for letter in 'a':'z'
-        if (t - letter) in bitstallies
+        if has_transdeletion(t, letter)
             return true
         end
     end
     return false
 end
+
+has_anagram(t::BitsTally) = t in bitstallies
 
 parenwrap(s) = "($s)"
 
