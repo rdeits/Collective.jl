@@ -13,6 +13,7 @@ function best_feature(wordlist, allowed_misses=length(wordlist))
 end
 
 include("states.jl")
+include("puzzles/ennui_and_endurance.jl")
 include("puzzles/school_of_fish.jl")
 include("puzzles/1_minus_1_equals_1.jl")
 include("puzzles/circus_line_clustering.jl")

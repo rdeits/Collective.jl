@@ -5,6 +5,6 @@
 end
 
 @testset "state abbreviations" begin
-    f = best_feature(["wahinex", "yalmond", "invadez", "wmandar", "inpland", "mainzla"])
+    f = best_feature(["wahinex", "yalmond", "invadez", "wmandar", "inpland", "mainqla"])
     @test f.description == "contains 3 US state abbreviations"
 end
