@@ -14,13 +14,10 @@ export Corpus,
        best_clusters,
        common_features
 
-function wordlist(data::IO)
-    words = lowercase.(strip.(vec(readdlm(data, ',', String))))
-    for i in 1:length(words)
-        words[i] = replace(words[i], r"[^a-z]", "")
-    end
-    words
-end
+cleanup(s::String) = replace(lowercase(strip(s)), r"[^a-z]", "")
+
+wordlist(data::IO) = cleanup.(vec(readdlm(data, ',', String)))
+wordlist(s::String) = wordlist(IOBuffer(s))
 
 include("bitstally.jl")
 import .BitsTallies: BitsTally, isanagram, istransaddition
