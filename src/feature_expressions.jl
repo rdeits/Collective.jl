@@ -6,45 +6,6 @@ macro feature(ex, description::Expr)
     Expr(:call, :Feature, Expr(:quote, ex), Expr(:quote, description))
 end
 
-cacheify!(setup, expr, input_var::Symbol) = expr
-
-function cacheify!(setup::OrderedDict{Symbol, Tuple{Symbol, Expr}}, expr::Expr, input_var::Symbol)
-    is_function = expr.head == :call
-    takes_one_arg = length(expr.args) == 2
-    function_name = expr.args[1]
-    arg_name = expr.args[2]
-    uses_avialable_arg = (arg_name == input_var) || any(arg_name == s[1] for s in values(setup))
-    can_be_cached = is_function && takes_one_arg && uses_avialable_arg
-    if can_be_cached
-        cached_name = Symbol(function_name, arg_name)
-        if !haskey(setup, cached_name)
-            cached_varname = gensym(cached_name)
-            setup[cached_name] = (cached_varname, :($cached_varname = $(copy(expr))))
-        else
-            cached_varname = setup[cached_name][1]
-        end
-        cached_varname
-    else
-        for (i, child) in enumerate(expr.args)
-            expr.args[i] = cacheify!(setup, child, input_var)
-        end
-        expr
-    end
-end
-
-function cacheify(expr::Expr, var::Symbol)
-    expr = copy(expr)
-    setup = OrderedDict{Symbol, Tuple{Symbol, Expr}}()
-    while true
-        num_setup = length(setup)
-        expr = cacheify!(setup, expr, var)
-        if length(setup) == num_setup
-            break
-        end
-    end
-    Expr(:block, [v[2] for v in values(setup)]..., expr)
-end
-
 immutable Feature
     expr::Expr
     args::Vector{Tuple{Symbol, Expr}}
@@ -95,8 +56,7 @@ function compile_test(features::Vector{Feature})
         push!(result.args, loop_over(feat.args, inner))
     end
     push!(result.args, values)
-    result = cacheify(result, :word)
-    # println(result)
+    result = combine_subexprs!(copy(result))
     result
 end
 
