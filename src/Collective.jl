@@ -3,16 +3,18 @@ __precompile__()
 module Collective
 
 import Base: size, getindex, isless, show
+import CommonSubexpressions: combine_subexprs!
 using Iterators: subsets
 using DataStructures: OrderedDict
 
-export Corpus, 
+export Corpus,
        wordlist,
        analyze,
        best_feature,
        best_cluster,
        best_clusters,
        common_features
+
 
 cleanup(s::String) = replace(lowercase(strip(s)), r"[^a-z]", "")
 
@@ -90,7 +92,7 @@ function best_feature(corpus::Corpus, vals::AbstractArray{BitArray{1}})
     n = length(vals)
     num_features = length(corpus.features.descriptions)
     p, i = findmin(Collective.binomial_pvalue(matches[i], n, corpus.frequencies[i]) for i in 1:num_features)
-    FeatureResult(corpus.features.descriptions[i], 
+    FeatureResult(corpus.features.descriptions[i],
                   corpus.features.evaluators[i],
                   [m[i] for m in vals],
                   p)
@@ -118,7 +120,7 @@ function best_cluster(corpus::Corpus, words::AbstractArray{String}, n::Integer)
     Cluster(words[best_subset], best_feature(corpus, words[best_subset]))
 end
 
-best_clusters(corpus::Corpus, words::AbstractArray{String}) = 
+best_clusters(corpus::Corpus, words::AbstractArray{String}) =
     [best_cluster(corpus, words, n) for n in 2:div(length(words), 2) if length(words) % n == 0]
 
 best_cluster(corpus::Corpus, words::AbstractArray{String}) = minimum(best_clusters(corpus, words))
@@ -133,7 +135,7 @@ function common_features(featureset::FeatureSet, words::AbstractArray{String})
                       NaN) for i in common_indices]
 end
 
-common_features(corpus::Corpus, words::AbstractArray{String}) = 
+common_features(corpus::Corpus, words::AbstractArray{String}) =
     common_features(corpus.features, words)
 
 
